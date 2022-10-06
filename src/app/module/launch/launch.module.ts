@@ -9,12 +9,14 @@ import { AppMaterialModule } from 'src/app/shared/app-material/app-material.modu
 import { SharedModule } from 'src/app/shared/shared.module';
 import { LaunchFormComponent } from './containers/launch-form/launch-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LaunchListComponent } from './components/launch-list/launch-list.component';
 
 
 @NgModule({
   declarations: [
     LaunchComponent,
     LaunchFormComponent,
+    LaunchListComponent,
   ],
   imports: [
     CommonModule,
