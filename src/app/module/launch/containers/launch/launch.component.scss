@@ -1,5 +1,19 @@
-.example-button-container {
-    display: flex;
-    justify-content: center;
-    width: 120px;
-  }
+mat-card {
+  max-width: 80%;
+  margin: 2em auto;
+  text-align: center;
+}
+
+.column-flex {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.loading-spinner {
+  padding: 25px;
+  background: rgba(240, 237, 237, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
