@@ -1,28 +1,60 @@
+<mat-card class="card-saldo">
+  <div class="example-button-container">
+    <h2>Bem vindo de volta!</h2>
+    <p>Sábado, 03/06/2023</p>
+  </div>
+  <h2>Saldo</h2>
+  <h2>R$ 19,99</h2>
+  <hr>
+  <h2>Conta Corrente</h2>
+  <h2>R$ 1000,00</h2>
+  
+</mat-card>
+
+<mat-card class="card-transacao">
+  <div class="example-button-container">
+    <h2>Nova Transação</h2>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo Transação</mat-label>
+        <mat-select>
+          <mat-option value="option">Receita</mat-option>
+          <mat-option value="option">Despesa</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>Tipo de transação</mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Valor</mat-label>
+        <input matInput placeholder="Placeholder">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>digite o valor</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+</mat-card>
+
 <mat-card>
-    <div class="example-button-container">
-        <button mat-fab color="primary" 
-          aria-label="Example icon button with a delete icon"
-          (click)="onAdd()">
-          <mat-icon>add</mat-icon>
-        </button>
+  <div class="example-button-container" style="margin-bottom: 10px;">
+    <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="onAdd()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <mat-toolbar color="primary">Lançamentos anteriores</mat-toolbar>
+
+  <div class="example-container mat-elevation-z8">
+    <app-launch-list *ngIf="launchs$ | async as launchs; else loading" [launchs]="launchs" (add)="onAdd()"
+      (edit)="onEdit($event)" (remove)="onRemove($event)"></app-launch-list>
+
+    <ng-template #loading>
+      <div class="loading-spinner">
+        <mat-spinner></mat-spinner>
       </div>
-    <mat-toolbar color="primary">Lançamentos anteriores</mat-toolbar>
+    </ng-template>
 
-    <div class="example-container mat-elevation-z8">
-      <app-launch-list
-        *ngIf="launchs$ | async as launchs; else loading"
-        [launchs]="launchs"
-        (add)="onAdd()"
-        (edit)="onEdit($event)"
-        (remove)="onRemove($event)"
-      ></app-launch-list>
-
-      <ng-template #loading>
-        <div class="loading-spinner">
-          <mat-spinner></mat-spinner>
-        </div>
-      </ng-template>
-
-        <p>Listagem de lançamentos</p>
-    </div>
+    <p>Listagem de lançamentos</p>
+  </div>
 </mat-card>
