@@ -7,7 +7,9 @@ import { IPagination } from 'src/app/core/interfaces/pagination.interface';
 import { mountHttpParams } from 'src/app/utils/mountHttpParams';
 import { environment } from 'src/environments/environment';
 
-import { ILaunchFilter, ILaunchInput } from './interfaces/launch.interface';
+import { ILaunchFilter, ILaunchInput, Launch } from './interfaces/launch.interface';
+import { IBalance } from './interfaces/balance.interface';
+//import { Launch } from '../launch/interfaces/launch.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,17 +22,21 @@ export class LaunchService {
     
   }
 
-  getByFilter(filter: ILaunchFilter): Observable<ApiOutput<IPagination<any>>> {
+  getByFilter(filter: ILaunchFilter): Observable<Launch[]> {
     const params = mountHttpParams(filter);
-    return this.http.get<ApiOutput<IPagination<any>>>(this.url, { params }).pipe(take(1));
+    // return this.http.get<ApiOutput<IPagination<Launch>>>(this.url, { params })
+    //   .pipe(take(1));
+    return this.http.get<Launch[]>(this.url, { params })
+      .pipe(take(1));
   }
 
   add(input: ILaunchInput): Observable<ApiOutput<boolean>> {
     return this.http.post<ApiOutput<boolean>>(`${environment.API}/${this.entity}`, input).pipe(take(1));
   }
 
-  getBalance(): Observable<ApiOutput<any>> {
-    return this.http.get<ApiOutput<IPagination<any>>>(`${this.url}/balance`).pipe(take(1));
+  getBalance(): Observable<IBalance> {
+    // return this.http.get<ApiOutput<IPagination<any>>>(`${environment.API}/balance`).pipe(take(1));
+    return this.http.get<IBalance>(`${environment.API}/balance`).pipe(take(1));
   }
 }
 

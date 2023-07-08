@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Launch } from '../../interfaces/launch.interface';
 
-import { Launch } from '../../models/launch';
+//import { Launch } from '../../models/launch';
 
 @Component({
   selector: 'app-launch-list',
@@ -14,7 +15,7 @@ export class LaunchListComponent implements OnInit {
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
 
-  readonly displayedColumns = ['description', 'type', 'actions'];
+  readonly displayedColumns = ['description', 'value', 'actions'];
 
   constructor() { }
 

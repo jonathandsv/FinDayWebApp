@@ -8,6 +8,7 @@ import { LaunchListComponent } from './components/launch-list/launch-list.compon
 import { LaunchFormComponent } from './containers/launch-form/launch-form.component';
 import { LaunchComponent } from './containers/launch/launch.component';
 import { LaunchRoutingModule } from './launch-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -20,6 +21,7 @@ import { LaunchRoutingModule } from './launch-routing.module';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    HttpClientModule,
     LaunchRoutingModule,
     AppMaterialModule,
     SharedModule,
