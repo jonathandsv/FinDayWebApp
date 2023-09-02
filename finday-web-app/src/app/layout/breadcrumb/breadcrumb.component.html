@@ -1,0 +1,27 @@
+<div  class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <span class="primary-color">
+    <a [routerLink]="['/']" aria-label="home"
+      ><i class="fa fa-home primary-color"></i
+    ></a>
+    {{ breadcrumbPage }}
+  </span>
+  <button
+    pButton
+    pRipple
+    label="Voltar"
+    aria-label="Voltar"
+    (click)="handleVoltar()"
+    *ngIf="
+      breadcrumbPage.includes('Cadastrar') ||
+      breadcrumbPage.includes('Alterar') ||
+      breadcrumbPage.includes('Detalhar') ||
+      breadcrumbPage.includes('Analisar') ||
+      breadcrumbPage.includes('Ajustar') ||
+      breadcrumbPage.includes('Responsavel-sistema') ||
+      breadcrumbPage.includes('Papel-com-perfil-padrao') ||
+      breadcrumbPage.includes('Emitir') ||
+      breadcrumbPage.includes('Agregada-alterar') ||
+      breadcrumbPage.includes('Agregada-detalhar')
+    "
+  ></button>
+</div>

@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="d-flex flex-row bd-highlight mb-3 justify-content-center">
+    <div class="p-2 bd-highlight d-flex">
+      <div *ngIf="totalRecords > 0">
+        <div *ngIf="page && (page - 1) * pageSize >= totalRecords ; else elseQuantidadePagina">
+          <span class="p-2 labelExibindo"> Mostrando {{ firstRecord }} até {{ totalRecords }} de {{totalRecords}} registros</span>
+        </div>
+        <ng-template #elseQuantidadePagina>
+          <div>
+            <span class="p-2 labelExibindo">Mostrando {{ firstRecord  }} até {{ lastRecord  }} de {{totalRecords}} registros</span>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <div class=" bd-highlight">
+      <pagination previousText="Anterior" nextText="Próximo" [totalItems]="totalRecords" [(ngModel)]="page"
+        class="rounded-0" [maxSize]="5" [rotate]="true" [align]="true" (pageChanged)="onPageChanged($event)"
+        [itemsPerPage]="pageSize" [boundaryLinks]="true"
+        [customFirstTemplate]="firstTemplate"
+        [customLastTemplate]="lastTemplate"
+        [customPreviousTemplate]="prevTemplate"
+        [customNextTemplate]="nextTemplate"
+        >
+        <ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
+          <ng-container *ngIf="!disabled">
+            <i class="fa-solid fa-angle-right"></i>
+          </ng-container>
+          <ng-container *ngIf="disabled">
+            <i class="fa-solid fa-angle-right"></i>
+          </ng-container>
+        </ng-template>
+        <ng-template #prevTemplate let-disabled="disabled" let-currentPage="currentPage">
+          <ng-container *ngIf="!disabled">
+            <i class="fa-solid fa-angle-left"></i>
+          </ng-container>
+          <ng-container *ngIf="disabled">
+            <i class="fa-solid fa-angle-left"></i>
+          </ng-container>
+        </ng-template>
+
+
+        <ng-template #lastTemplate let-disabled="disabled" let-currentPage="currentPage">
+          <i class="fa-solid fa-angles-right"></i>
+        </ng-template>
+
+        <ng-template #firstTemplate let-disabled="disabled" let-currentPage="currentPage">
+
+          <i class="fa-solid fa-angles-left"></i>
+        </ng-template>
+      </pagination>
+    </div>
+    <div class="ps-2 bd-highlight">
+      <select class="form-select" aria-label="Default select example" [(ngModel)]="pageSize"
+        (change)="onPageSizeChanged()">
+        <option selected value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+  </div>
+</div>

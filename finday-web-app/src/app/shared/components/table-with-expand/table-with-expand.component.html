@@ -1,0 +1,97 @@
+<p-table #dt [columns]="cols" dataKey="{{dataKey}}" [value]="registros" resizeableColumns="true" autoLayout="true"
+  responsiveLayout="scroll" [paginator]="true" [rows]="pageSize" [showCurrentPageReport]="true"
+  currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} registros"
+  [rowsPerPageOptions]="[10, 25, 50, 100]" [scrollable]="true" [(first)]="first" (onLazyLoad)="handleLazyLoad($event)"
+  [lazy]="isLazy" styleClass="p-datatable-striped" [totalRecords]="totalRecords" (onPage)="paginando($event)"
+  [lazyLoadOnInit]="false">
+
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <div style="display: flex; background: #e9ecef;">
+        <th class="header-column-white"></th>
+      </div>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="justify-content-center">
+        <span style="font-size: 12px">{{ col.header }}</span>
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+      <th class="justify-content-center">
+        <span style="font-size: 12px">Ações</span>
+      </th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+    <tr>
+      <div class="body-column-white">
+        <td class="" style="margin-right: 8px; display: flex; margin-top: 5px;">
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="#" [pRowToggler]="rowData" [rowExpandMode]="single">
+            <i [ngClass]="expanded ? 'pi pi-fw pi-chevron-circle-down' : 'pi pi-fw pi-chevron-circle-right'"></i>
+          </a>
+        </td>
+      </div>
+      <td *ngFor="let col of columns" [style]="col.style" class="{{col.css}}">
+        <span style="font-size: 14px">{{rowData[col.field]}}</span>
+      </td>
+      <td class="gap-1 justify-content-center align-items-center">
+        <div *ngIf="isValidarAcoes; else validarAcoes">
+          <span *permissao="'alterar'" style="padding-left: 1px; padding-right: 1px;">
+            <img src="assets/img/ico-edita.svg" style="cursor: pointer" title="Alterar" (click)="handleAlterar(rowData)"
+              *ngIf="isExisteAlterar" />
+          </span>
+          <span *permissao="'detalhar'" style="padding-left: 1px; padding-right: 1px;">
+            <img src="assets/img/ico-detalhar.svg" style="cursor: pointer" title="Detalhar"
+              (click)="handleDetalhar(rowData)" *ngIf="isExisteDetalhar" />
+          </span>
+          <span *permissao="'inativar'" style="padding-left: 1px; padding-right: 1px;">
+            <img src="assets/img/ico-ativo.svg" alt="Ativar" title="Clique para Ativar" style="cursor: pointer"
+              (click)="handleAtivaInativar(true, rowData)" *ngIf="isExisteAtivaInativar && !rowData.isAtivo" />
+            <img src="assets/img/ico-inativo.svg" alt="Inativar" title="Clique para Inativar" style="cursor: pointer"
+              (click)="handleAtivaInativar(false, rowData)" *ngIf="isExisteAtivaInativar && rowData.isAtivo" />
+          </span>
+        </div>
+        <ng-template #validarAcoes>
+          <img src="assets/img/ico-edita.svg" style="cursor: pointer" title="Alterar" (click)="handleAlterar(rowData)"
+            *ngIf="isExisteAlterar" />
+          <img src="assets/img/ico-detalhar.svg" style="cursor: pointer" title="Detalhar"
+            (click)="handleDetalhar(rowData)" *ngIf="isExisteDetalhar" />
+          <img src="assets/img/ico-ativo.svg" alt="Ativar" title="Clique para Ativar" style="cursor: pointer"
+            (click)="handleAtivaInativar(true, rowData)" *ngIf="isExisteAtivaInativar && !rowData.isAtivo" />
+          <img src="assets/img/ico-inativo.svg" alt="Inativar" title="Clique para Inativar" style="cursor: pointer"
+            (click)="handleAtivaInativar(false, rowData)" *ngIf="isExisteAtivaInativar && rowData.isAtivo" />
+        </ng-template>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+    <tr>
+      <td [attr.colspan]="columns.length + 2" class="text-center justify-content-center">
+        <div class="col-md-12 text-center d-flex justify-content-center">
+          <p-table class="col-md-8" [value]="rowData[childNameList]" dataKey="codigo"
+            [tableStyle]="{'margin': '15px 0px', 'overflow-y':'hidden', 'overflow-x':'hidden'}">
+            <ng-template pTemplate="header" *ngIf="rowData[childNameList].length>0">
+    <tr>
+      <th *ngFor="let title of nameChildTable" class="col-md-6" style="text-align: center; display: grid;"
+        style="background-color: transparent; color: #212529; text-align: center; display: block;"><span
+          style="font-size: 12px; text-align: center;">{{title}}</span></th>
+    </tr>
+    <hr style="color: #1d70b7;margin: 1px; height: 2px;opacity: 100;width: 100%;">
+
+  </ng-template>
+  <ng-template pTemplate="body" let-r>
+    <tr>
+      <td *ngFor="let fild of fieldChildTable"><span style="font-size: 14px">{{r[fild]}}</span></td>
+    </tr>
+  </ng-template>
+</p-table>
+</div>
+</td>
+</tr>
+</ng-template>
+<ng-template pTemplate="emptymessage" let-columns>
+  <tr>
+    <td [attr.colspan]="columns.length + 1" class="text-center d-flex justify-content-center">
+      <span>Nenhum resultado encontrado.</span>
+    </td>
+  </tr>
+</ng-template>
+</p-table>

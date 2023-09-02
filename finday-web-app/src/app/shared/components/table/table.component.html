@@ -1,0 +1,79 @@
+<p-table #dt [columns]="cols" [value]="registros" resizeableColumns="true" autoLayout="true" responsiveLayout="scroll"
+  [paginator]="true" [rows]="pageSize" [showCurrentPageReport]="true"
+  currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} registros"
+  [rowsPerPageOptions]="[10, 25, 50, 100]" [scrollable]="true" [(first)]="first" (onLazyLoad)="handleLazyLoad($event)"
+  [lazy]="isLazy" styleClass="p-datatable-striped" [totalRecords]="totalRecords" (onPage)="paginando($event)"
+  [lazyLoadOnInit]="false">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="justify-content-center">
+        <span style="font-size: 12px">{{ col.header }}</span><p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+      <th class="justify-content-center" *ngIf="exibirAcoes">
+        <span style="font-size: 12px">Ações</span>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns" class="{{col.css}}" >
+        <span class="" *ngIf="col.displayField.toString().toLowerCase().includes('data')">{{ rowData[col.displayField] |
+          date: "dd/MM/yyyy" }}</span>
+        <span class="" *ngIf="!col.displayField.toString().toLowerCase().includes('data')" [style]="col.style">{{ rowData[col.displayField]
+          }}</span>
+      </td>
+      <td *ngIf="exibirAcoes" class="gap-2 justify-content-center" >
+        <div *ngIf="isValidarAcoes; else validarAcoes">
+          <span *permissao="'alterar'" style="padding-left: 1px; padding-right: 1px;">
+            <img src="assets/img/ico-edita.svg" style="cursor: pointer" title="Alterar" (click)="handleAlterar(rowData)"
+              *ngIf="isExisteAlterar || rowData?.isExisteAlterar" />
+          </span>
+
+          <span *permissao="'detalhar'" style="padding-left: 1px; padding-right: 1px;">
+            <img src="assets/img/ico-detalhar.svg" style="cursor: pointer" title="Detalhar"
+              (click)="handleDetalhar(rowData)" *ngIf="isExisteDetalhar" />
+          </span>
+          <span *permissao="'alterar-perfil'" style="padding-left: 1px; padding-right: 1px;">
+            <a title="Alterar Perfil" class="acao text-center" style="cursor: pointer;"
+              (click)="handleAlterarPerfil(rowData)" *ngIf="isExisteAlterarPerfil">
+              <i class="acao fa-solid fa-user" style=" height: 22px;"> </i>
+            </a>
+          </span>
+
+          <span *permissao="'inativar'" style="padding-left: 1px; padding-right: 1px;">
+            <img src="assets/img/ico-ativo.svg" alt="Ativar" title="Clique para Ativar" style="cursor: pointer"
+              (click)="handleAtivaInativar(true, rowData)" *ngIf="isExisteAtivaInativar && !rowData.isAtivo" />
+            <img src="assets/img/ico-inativo.svg" alt="Inativar" title="Clique para Inativar" style="cursor: pointer"
+              (click)="handleAtivaInativar(false, rowData)" *ngIf="isExisteAtivaInativar && rowData.isAtivo" />
+          </span>
+        </div>
+        <ng-template #validarAcoes>
+          <img src="assets/img/ico-edita.svg" style="cursor: pointer" title="Alterar" (click)="handleAlterar(rowData)"
+            *ngIf="isExisteAlterar || rowData?.isExisteAlterar" />
+
+          <img src="assets/img/ico-detalhar.svg" style="cursor: pointer" title="Detalhar"
+            (click)="handleDetalhar(rowData)" *ngIf="isExisteDetalhar" />
+
+          <a title="Alterar Perfil" class="acao text-center" style="cursor: pointer"
+            (click)="handleAlterarPerfil(rowData)" *ngIf="isExisteAlterarPerfil">
+            <i class="acao fa-solid fa-user"> </i>
+          </a>
+          <img src="assets/img/ico-ativo.svg" alt="Ativar" title="Clique para Ativar" style="cursor: pointer"
+            (click)="handleAtivaInativar(true, rowData)" *ngIf="isExisteAtivaInativar && !rowData.isAtivo" />
+          <img src="assets/img/ico-inativo.svg" alt="Inativar" title="Clique para Inativar" style="cursor: pointer"
+            (click)="handleAtivaInativar(false, rowData)" *ngIf="isExisteAtivaInativar && rowData.isAtivo" />
+
+        </ng-template>
+            <span class="btn btn-primary btn-sm btn-grid" (click)="handleDocumentos(rowData)" title="Documentos"
+            *ngIf="isExisteDocumento || rowData?.isExisteDocumento"><i class="fa fa-paperclip"></i></span>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage" let-columns>
+    <tr>
+      <td [attr.colspan]="columns.length + 1" class="text-center d-flex justify-content-center">
+        <span>Nenhum resultado encontrado.</span>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

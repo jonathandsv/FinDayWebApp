@@ -1,0 +1,28 @@
+/*
+p-table {
+    word-break: break-all;
+}
+
+.ui-datatable thead th {
+    white-space:normal;
+ }
+*/
+p-table {
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+.acao {
+  background-color: rgb(37, 91, 161);
+  color: #fff;
+  text-decoration: inherit;
+  width: 24px;
+  border-radius: 2px;
+  padding-top: 1.5px;
+  padding-bottom: 1.5px;
+}
+.acao-icon {
+  color: #fff;
+}
+
+

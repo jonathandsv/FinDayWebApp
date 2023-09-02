@@ -1,0 +1,111 @@
+<table class="table table-striped table-bordered table-sm table-header-border-color">
+  <thead>
+    <tr>
+      <th width="2" *ngIf="selectable" class="align-middle text-center"><p-inputSwitch [(ngModel)]="selectAllRecords" (onChange)="selectAll($event)" styleClass="grid-switch"></p-inputSwitch></th>
+      <th width="2" *ngIf="activateNestedTable"></th>
+      <ng-container *ngFor="let column of columns">
+        <th scope="col" width="{{ column.width }}%" (click)="sort(column)" class="align-middle {{column.headerCss}}">
+          <span>{{column.header}}</span>
+          <div *ngIf="column.field && sortable" class="ordencao">
+            <i class="fa fa-sort-up" [ngClass]="{'opacidadeOrdenacao' : !column.order || column.order != 'asc'}"></i>
+            <i class="fa fa-sort-down" [ngClass]="{'opacidadeOrdenacao' : !column.order || column.order != 'desc'}"></i>
+          </div>
+        </th>
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="!tbodyTemplate; else customTbody">
+      <ng-container *ngFor="let record of records; let id = index">
+        <tr>
+          <td *ngIf="activateNestedTable" class="align-middle text-center">
+            <button (click)="record.nestedTableActive = !record.nestedTableActive" class="btn btn-link">
+              <i class="fas fa-arrow-right"
+                [style.transform]="record.nestedTableActive ? 'rotate(90deg)' : 'rotate(0deg)'"></i>
+            </button>
+          </td>
+          <ng-container *ngFor="let column of columns">
+            <td *ngIf="column.field && column.field != ''" class="align-middle p-2 {{column.css}}" >
+              <ng-container *ngIf="column.displayField">
+                {{record[column.displayField]}}
+              </ng-container>
+              <ng-container *ngIf="!column.displayField">
+                {{record[column.field]}}
+              </ng-container>
+            </td>
+          </ng-container>
+          <td *ngIf="actions.length > 0" class="align-middle text-center">
+            <div class="dropdown" >
+              <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+                style="text-decoration: none;">
+                <i class="fa-solid fa-ellipsis icone-reticencias"></i>
+              </button>
+
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <ng-container *ngFor="let action of actions">
+                  <ng-container *permissao="action.permissao">
+                    <li *ngIf="action.visibilityProperty && action.visibilityProperty != null && record[action.visibilityProperty] == action.expectedVisibilityValue; else elseAction">
+                      <a class="dropdown-item" style="cursor: pointer;" (click)="action.click(record)"
+                       >
+                        {{ action.label }}
+                      </a>
+                    </li>
+                    <ng-template #elseAction>
+                      <a class="dropdown-item" style="cursor: pointer;" (click)="action.click(record)"
+                        *ngIf="!action.visibilityProperty">
+                        {{ action.label }}
+                      </a>
+                    </ng-template>
+                  </ng-container>
+                </ng-container>
+              </ul>
+            </div>
+          </td>
+        </tr>
+
+        <tr *ngIf="record.nestedTableActive">
+          <td [attr.colspan]="actions.length > 0 ? columns.length + 2 : columns.length + 1" class="p-2">
+            <table class="table table-striped table-bordered nested-table">
+              <thead>
+                <tr>
+                  <ng-container *ngFor="let column of nestedTableColumns">
+                    <th scope="col" width="{{ column.width }}%">
+                      <span>{{column.header}}</span>
+                    </th>
+                  </ng-container>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let itemTabelaAninhada of record[nestedTableRecordsProperty]">
+                  <ng-container *ngFor="let column of nestedTableColumns">
+                    <td *ngIf="column.field && column.field != ''" class="p-1">
+                      {{itemTabelaAninhada[column.field]}}
+                    </td>
+                  </ng-container>
+                </tr>
+                <ng-container *ngIf="record[nestedTableRecordsProperty].length == 0">
+                  <tr class="text-center">
+                    <td [attr.colspan]="nestedTableColumns.length">Nenhum registro encontrado.</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+
+          </td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="records.length == 0">
+        <tr class="text-center">
+          <td [attr.colspan]="activateNestedTable ? columns.length + 1 : columns.length">Nenhum registro encontrado.
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+    <ng-template #customTbody>
+      <ng-container *ngTemplateOutlet="tbodyTemplate; context: { $implicit: records, columns }"></ng-container>
+    </ng-template>
+  </tbody>
+</table>
+<oasis-pagination *ngIf="totalRecords" [totalRecords]="totalRecords" [page]="page" [ageSize]="pageSize" (pageChanged)="pageChanged($event)"
+  (pageSizeChanged)="pageSizeChanged($event)">
+</oasis-pagination>
