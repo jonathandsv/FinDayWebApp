@@ -1,16 +1,9 @@
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LoadingService } from 'src/app/core/services/loading-service.service';
 import { TokenService } from 'src/app/core/services/token.service';
-import { environment } from 'src/environments/environment.prod';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {

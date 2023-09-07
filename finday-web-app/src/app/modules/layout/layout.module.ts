@@ -17,7 +17,7 @@ import { SidebarSubmenuComponent } from './components/sidebar/sidebar-submenu/si
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
-import { SharedModule } from 'src/app/shared/sharedFW.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 @NgModule({
   declarations: [
     LayoutComponent,

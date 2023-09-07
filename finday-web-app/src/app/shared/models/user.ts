@@ -5,12 +5,6 @@ export class Usuario {
   apelido?: string;
   email?: string;
   cpf?: string;
-  codigoDominio?: number;
-  codigoEmpresa?: number;
-  inRelacaoContratual: number;
-  codigoPapelProfissional: number;
-  numeroTelefoneContato: string;
-  numeroTelefoneContatoAux: string;
   nomepapel?: string;
   perfil?: Perfil;
   ehPraMostrarHome?: string;

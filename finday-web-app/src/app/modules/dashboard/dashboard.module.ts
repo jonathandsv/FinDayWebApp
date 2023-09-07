@@ -15,7 +15,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { NftHeaderComponent } from './components/nft/nft-header/nft-header.component';
 import { NftAuctionsTableComponent } from './components/nft/nft-auctions-table/nft-auctions-table.component';
 import { NftAuctionsTableItemComponent } from './components/nft/nft-auctions-table-item/nft-auctions-table-item.component';
-import { SharedModule } from 'src/app/shared/sharedFW.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [

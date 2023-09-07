@@ -1,37 +1,19 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
-import { Observable } from 'rxjs';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { TokenService } from 'src/app/core/services/token.service';
-import { emitirMensagem } from 'src/app/shared/utils/emitirMensagem';
+export const authGuard = () => {
+  const router = inject(Router);
+  const tokenService = inject(TokenService);
 
-@Injectable()
-export class AuthGuard implements CanActivate {
-  private isLoggedIn: boolean;
-  private observer$: Observable<boolean>;
+  return validateGuardToken();
 
-  constructor(
-    private tokenService: TokenService,
-    private router: Router,
-    private messageService: MessageService
-  ) {}
-
-  canActivate(): boolean {
-    return this.validacaoGuardToken();
-  }
-
-  canActivateChild(): boolean {
-    return this.validacaoGuardToken();
-  }
-
-  validacaoGuardToken() {
-    const tokenExpired = this.tokenService.tokenExpired();
-
-    const usuario = this.tokenService.decryptToken();
+  function validateGuardToken() {
+    const tokenExpired = tokenService.tokenExpired();
+    const usuario = tokenService.decryptToken();
     if (tokenExpired || usuario.codigo == 0 || !usuario.cpf) {
-      this.router.navigate(['/login']);
+      router.navigate(['/login']);
     }
-
+    
     return !tokenExpired;
   }
 }

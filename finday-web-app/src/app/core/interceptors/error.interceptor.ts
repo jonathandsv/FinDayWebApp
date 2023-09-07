@@ -1,12 +1,6 @@
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-} from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { LoadingService } from 'src/app/core/services/loading-service.service';
@@ -16,8 +10,7 @@ import { emitirMensagem } from 'src/app/shared/utils/emitirMensagem';
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
     private _loading: LoadingService,
-    private router: Router,
-    private messageService: MessageService
+    private router: Router
   ) { }
 
   intercept(
@@ -39,56 +32,52 @@ export class ErrorInterceptor implements HttpInterceptor {
       if (!!ex.error) {
         if (typeof ex.error === 'object') {
           if (Array.isArray(ex.error?.messages)) {
-            /*let msgCompleta = "";
-                        ex.error.forEach((msg: string) => {
-
-                            if (!!msg) {
-                                msgCompleta += `<pre>${msg}</pre>`;
-                            }
-
-                            if(!msgCompleta) {
-                                msgCompleta += "/n";
-                            }
-
-                        });*/
-            emitirMensagem(this.messageService, 'warn', ex.error.messages.join('\n'));
+            // emitirMensagem(this.messageService, 'warn', ex.error.messages.join('\n'));
+            console.log('erro: ', ex.error);
           } else {
-            emitirMensagem(this.messageService, 'warn', ex.error.message);
+            // emitirMensagem(this.messageService, 'warn', ex.error.message);
+            console.log('erro: ', ex.error);
           }
         } else {
-          emitirMensagem(this.messageService, 'warn', ex.error);
+          // emitirMensagem(this.messageService, 'warn', ex.error);
+          console.log('erro: ', ex.error);
         }
       }
       return;
     }
     else if (ex.status === 401) {
-      emitirMensagem(
-        this.messageService,
-        'warn',
-        `Usuário não autorizado. \n É necessário realizar o login.`
-      );
+      // emitirMensagem(
+      //   this.messageService,
+      //   'warn',
+      //   `Usuário não autorizado. \n É necessário realizar o login.`
+      // );
+      console.log('não autorizado ')
       this.router.navigate(['/login']);
       return;
     } else if (ex.status === 403) {
-        emitirMensagem(this.messageService, "error", "Usuário não autorizado");
+        // emitirMensagem(this.messageService, "error", "Usuário não autorizado");
+        console.log('Usuário não autorizado"');
         return;
     }
     else if (ex.status === 404) {
-      emitirMensagem(
-        this.messageService,
-        'warn',
-        'o recurso URI não foi encontrado.'
-      );
+      // emitirMensagem(
+      //   this.messageService,
+      //   'warn',
+      //   'o recurso URI não foi encontrado.'
+      // );
+      console.log('o recurso URI não foi encontrado.');
       return;
     } else if (ex.status === 500) {
-      emitirMensagem(
-        this.messageService,
-        'error',
-        'Houve um erro interno na aplicação, por favor tente novamente mais tarde ou consulte o suporte'
-      );
+      // emitirMensagem(
+      //   this.messageService,
+      //   'error',
+      //   'Houve um erro interno na aplicação, por favor tente novamente mais tarde ou consulte o suporte'
+      // );
+      console.log('Houve um erro interno na aplicação, por favor tente novamente mais tarde ou consulte o suporte');
       return;
     } else {
-      emitirMensagem(this.messageService, 'error', 'Serviço indisponível.');
+      // emitirMensagem(this.messageService, 'error', 'Serviço indisponível.');
+      console.log('Serviço indisponível.');
     }
   }
 }

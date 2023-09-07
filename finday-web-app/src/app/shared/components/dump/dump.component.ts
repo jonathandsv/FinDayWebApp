@@ -12,7 +12,8 @@ export class DumpComponent implements OnInit {
     @Input() dumpFormGroup: FormGroup;
     listaCampos: string[] = [];
 
-    constructor() { }
+    constructor() { 
+    }
 
     ngOnInit() {
         this.dumpFormGroup ? this.listarCampos() : null;
