@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { LoadingService } from 'src/app/core/services/loading-service.service';
-import { emitirMensagem } from 'src/app/shared/utils/emitirMensagem';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

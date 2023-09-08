@@ -8,7 +8,7 @@ import { BalanceService } from '../../services/balance.service';
   styleUrls: ['./balance.component.scss']
 })
 export class BalanceComponent implements OnInit {
-  @Input() month = 1;
+  @Input() month = 9;
   balances: balanceMonth[] = [];
 
   constructor(private balanceService: BalanceService) {}
@@ -18,6 +18,7 @@ export class BalanceComponent implements OnInit {
       next: (resp) => {
         if (resp) {
           this.balances = (resp.data as balanceMonth[]);
+          console.log('valor dos balancos', this.balances);
         }
       },
       error: (error) => {

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { WalletsModule } from '../wallets/wallets.module';
+import { PlanModule } from '../plan/plan.module';
+import { LaunchModule } from '../launch/launch.module';
 
 
 
@@ -13,7 +15,9 @@ import { WalletsModule } from '../wallets/wallets.module';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    WalletsModule
+    WalletsModule,
+    PlanModule,
+    LaunchModule
   ]
 })
 export class HomeModule { }

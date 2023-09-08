@@ -5,21 +5,21 @@ import { Observable, take } from 'rxjs';
 import { ApiOutput } from 'src/app/core/interfaces/api-output.inteface';
 import { environment } from 'src/environments/environment';
 
-import { balanceMonth } from '../interfaces/balance.interface';
+import { LaunchTypeEnum, launch } from '../interfaces/launch.interface';
 
 @Injectable({
     providedIn: 'root'
   })
-  export class BalanceService {
+  export class LaunchService {
   
-    url = `${environment.API_FINDAY}/balance`;
+    url = `${environment.API_FINDAY}/launch`;
   
     constructor(protected http: HttpClient, protected router: Router) {}
   
-    getBalancesByMonth(month: number): Observable<ApiOutput<balanceMonth[]>> {
+    getLaunchByType(launchTypeEnum: LaunchTypeEnum): Observable<ApiOutput<launch[]>> {
         let params = new HttpParams();
-        params = params.set('month', month ? month : 1);
-      return this.http.get<ApiOutput<balanceMonth[]>>(`${this.url}/by-month`, { params }).pipe(take(1));
+        params = params.set('launchTypeEnum', launchTypeEnum ? launchTypeEnum : 1);
+      return this.http.get<ApiOutput<launch[]>>(`${this.url}/by-type`, { params }).pipe(take(1));
     }
   }
   

@@ -4,22 +4,19 @@ import { Router } from '@angular/router';
 import { Observable, take } from 'rxjs';
 import { ApiOutput } from 'src/app/core/interfaces/api-output.inteface';
 import { environment } from 'src/environments/environment';
-
-import { balanceMonth } from '../interfaces/balance.interface';
+import { planBase } from '../interfaces/plan.interface';
 
 @Injectable({
     providedIn: 'root'
   })
-  export class BalanceService {
+  export class PlanService {
   
-    url = `${environment.API_FINDAY}/balance`;
+    url = `${environment.API_FINDAY}/plans`;
   
     constructor(protected http: HttpClient, protected router: Router) {}
   
-    getBalancesByMonth(month: number): Observable<ApiOutput<balanceMonth[]>> {
-        let params = new HttpParams();
-        params = params.set('month', month ? month : 1);
-      return this.http.get<ApiOutput<balanceMonth[]>>(`${this.url}/by-month`, { params }).pipe(take(1));
+    getPlans(): Observable<ApiOutput<planBase[]>> {
+      return this.http.get<ApiOutput<planBase[]>>(`${this.url}`).pipe(take(1));
     }
   }
   
