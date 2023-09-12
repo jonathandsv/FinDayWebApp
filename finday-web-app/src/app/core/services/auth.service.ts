@@ -18,7 +18,8 @@ export class AuthService {
   login(user: UserDTO) {
     return this.http.post<any>(`${environment.API_FINDAY}/Account/login`, user).subscribe({
       next: (res) => {
-        this.tokenService.setToken(res.token);
+        debugger
+        this.tokenService.setToken(res.data.accessToken);
         this.router.navigate(['/']);
       },
       error: (erro) => {

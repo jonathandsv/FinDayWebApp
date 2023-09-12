@@ -10,9 +10,9 @@ const KEY = 'usuario';
   providedIn: 'root',
 })
 export class UserService {
-  usuario: Usuario;
+  usuario: Usuario = {};
 
-  public usuarioSubject = new BehaviorSubject<Usuario>(null);
+  public usuarioSubject = new BehaviorSubject<Usuario>({});
   constructor(private router: Router, private tokenService: TokenService) {
 
   }
@@ -25,27 +25,29 @@ export class UserService {
   }
 
   sair() {
-    this.usuarioSubject.next(null);
+    this.usuarioSubject.next({});
     this.tokenService.removeToken();
     window.localStorage.clear();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 
   verificarPermissaoAcao(nomefuncionalidade: string, acao: string): boolean {
-    var funcionalidade = this.usuario.perfil.funcionalidades.find(x => this.removeAcento(x.nome) == this.removeAcento(nomefuncionalidade));
-    if (funcionalidade) {
-      var acao = funcionalidade.acoes.find(x => x == acao);
-      return acao ? true : false;
-    }
-    return false;
+    // var funcionalidade = this.usuario.perfil.funcionalidades.find(x => this.removeAcento(x.nome) == this.removeAcento(nomefuncionalidade));
+    // if (funcionalidade) {
+    //   var acao = funcionalidade.acoes.find(x => x == acao);
+    //   return acao ? true : false;
+    // }
+    // return false;
+    return true;
   }
 
   verificarPermissaoFuncionalidade(nomefuncionalidade: string): boolean {
-    var funcionalidade = this.usuario.perfil.funcionalidades.find(x => this.removeAcento(x.nome) == this.removeAcento(nomefuncionalidade));
-    return funcionalidade ? true : false;
+    // var funcionalidade = this.usuario.perfil.funcionalidades.find(x => this.removeAcento(x.nome) == this.removeAcento(nomefuncionalidade));
+    // return funcionalidade ? true : false;
+    return true;
   }
 
-  removeAcento(text) {
+  removeAcento(text: string): string {
     text = text.toLowerCase();
     text = text.replace(new RegExp('[ÁÀÂÃ]', 'gi'), 'a');
     text = text.replace(new RegExp('[ÉÈÊ]', 'gi'), 'e');

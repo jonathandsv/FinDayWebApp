@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-profile-menu',
@@ -8,11 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class ProfileMenuComponent implements OnInit {
   public isMenuOpen = false;
 
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {}
 
   public toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  logout() {
+    this.userService.sair();
   }
 }

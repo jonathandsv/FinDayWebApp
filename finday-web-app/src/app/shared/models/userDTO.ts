@@ -1,6 +1,4 @@
 export class UserDTO {
-  login?: string;
-  senha?: string;
-  codigoDominio?: number;
-  local?: number;
+  email?: string;
+  password?: string;
 }
