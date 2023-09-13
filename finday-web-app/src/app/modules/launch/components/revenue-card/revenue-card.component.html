@@ -1,3 +1,64 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Adicionar Entrada" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+[nzClassName]="'flex-col rounded-lg bg-white px-1 py-1 dark:bg-night-700 sm:flex-row'">
+  <ng-container *nzModalContent>
+    <div class="space-y-3 text-left">
+      <div class="relative">
+        <input type="text" id="email" class="peer block" placeholder=" " />
+        <label
+          for="email"
+          class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-500 dark:bg-night-700 dark:text-night-200">
+          Descrição
+        </label>
+      </div>
+      <div class="relative">
+        <input type="password" id="password" class="peer block" placeholder=" " />
+        <label
+          for="password"
+          class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-600 dark:bg-night-700 dark:text-night-200">
+          Valor
+        </label>
+      </div>
+      <div class="relative">
+        <input type="password" id="password" class="peer block" placeholder=" " />
+        <label
+          for="password"
+          class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-600 dark:bg-night-700 dark:text-night-200">
+          Categoria
+        </label>
+      </div>
+      <div class="relative">
+        <input type="password" id="password" class="peer block" placeholder=" " />
+        <label
+          for="password"
+          class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-600 dark:bg-night-700 dark:text-night-200">
+          Fonte
+        </label>
+      </div>
+      
+      <div class="relative">
+        <input type="password" id="password" class="peer block" placeholder=" " />
+        <label
+          for="password"
+          class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-600 dark:bg-night-700 dark:text-night-200">
+          Data do Lançamento
+        </label>
+      </div>
+    </div>
+  </ng-container>
+  <div *nzModalFooter>
+    <div class="mt-6 flex items-center justify-between">
+      <button (click)="handleOk()"
+        class="flex-none rounded-md bg-primary-500 px-4 py-2.5 text-xs font-semibold text-white hover:bg-primary-600">
+        Salvar
+      </button>
+      <button
+        (click)="handleCancel()"
+        class="flex-none rounded-md bg-gray-100 px-4 py-2.5 text-xs font-semibold text-gray-500 hover:bg-gray-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</nz-modal>
 <div class="flex-col rounded-lg bg-white px-8 py-8 dark:bg-night-700 sm:flex-row">
     <div class="mb-4 flex items-center justify-between">
       <div class="flex-col items-center">
@@ -5,6 +66,7 @@
         <span class="text-sm text-gray-400 dark:text-night-300">Atualizado à 37 minutos</span>
       </div>
       <button
+        (click)="showModal()"
         class="flex-none rounded-md bg-gray-100 px-4 py-2.5 text-xs font-semibold text-gray-500 hover:bg-gray-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
         Adicionar Entrada
       </button>

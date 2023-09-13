@@ -11,6 +11,7 @@ export class RevenueCardComponent {
   launchs: launch[] = [];
   image: string = 'https://lh3.googleusercontent.com/k95IQpeYutx-lYXwgTZw0kXZl9GAkIOc4Yz3Dr06rndWphZ25kSWyF64aTqT3W4cOxz0eB5LfAss5i9WAR-ZPWVaifijsABLqzEYwHY=h500';
   public activeAuction: any[] = [];
+  isVisible = false;
 
   constructor(private lanuchService: LaunchService) {
     this.lanuchService.getLaunchByType(LaunchTypeEnum.Credit).subscribe({
@@ -88,5 +89,19 @@ export class RevenueCardComponent {
         date: '12/06/2023'
       },
     ];
+  }
+
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    console.log('Button ok clicked!');
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
   }
 }

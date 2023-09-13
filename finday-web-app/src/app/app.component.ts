@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ThemeService } from './core/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +6,5 @@ import { ThemeService } from './core/services/theme.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'finday-web-app';
-
-  constructor(public themeService: ThemeService) {}
+  isCollapsed = false;
 }

@@ -7,6 +7,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { pt_BR } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import pt from '@angular/common/locales/pt';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IconsProviderModule } from './icons-provider.module';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+
+registerLocaleData(pt);
 
 @NgModule({
   declarations: [
@@ -18,9 +29,16 @@ import { CoreModule } from './core/core.module';
     SharedModule,
     HttpClientModule,
     AngularSvgIconModule.forRoot(),
-    CoreModule
+    CoreModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    IconsProviderModule,
+    NzLayoutModule,
+    NzMenuModule
   ],
-  providers: [],
+  providers: [
+    { provide: NZ_I18N, useValue: pt_BR }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
