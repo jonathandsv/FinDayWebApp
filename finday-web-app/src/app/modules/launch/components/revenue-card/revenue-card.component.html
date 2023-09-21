@@ -47,12 +47,22 @@
       </div>
       
       <div class="relative">
-        <input type="text" id="launchDate" formControlName="launchDate" class="peer block" placeholder=" " />
+        
+        
+        <!-- <input type="text" id="launchDate" formControlName="launchDate" class="peer block" placeholder=" " /> -->
         <label
           for="launchDate"
           class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-600 dark:bg-night-700 dark:text-night-200">
           Data do Lançamento
         </label>
+        <nz-date-picker class="peer block" 
+          id="launchDate" 
+          formControlName="launchDate" 
+          (ngModelChange)="onChange($event)"
+          [nzPlaceHolder]="'-'"
+          [nzSize]="'large'"
+          [nzFormat]="'dd/MM/yyyy'">
+        </nz-date-picker>
         <app-field-errors [control]="form.get('launchDate')">
         </app-field-errors>
       </div>

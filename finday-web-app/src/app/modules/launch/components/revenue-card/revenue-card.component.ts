@@ -143,4 +143,9 @@ export class RevenueCardComponent implements OnInit {
   save(): void {
 
   }
+
+  //Date
+  onChange(result: Date): void {
+    console.log('onChange: ', result);
+  }
 }
