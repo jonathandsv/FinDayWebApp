@@ -1,20 +1,31 @@
-import { Component } from '@angular/core';
-import { LaunchTypeEnum, launch } from '../../interfaces/launch.interface';
+import { Component, OnInit } from '@angular/core';
+import { LaunchTypeEnum, launch, launchInput } from '../../interfaces/launch.interface';
 import { LaunchService } from '../../services/launch.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-revenue-card',
   templateUrl: './revenue-card.component.html',
   styleUrls: ['./revenue-card.component.scss']
 })
-export class RevenueCardComponent {
+export class RevenueCardComponent implements OnInit {
   launchs: launch[] = [];
   image: string = 'https://lh3.googleusercontent.com/k95IQpeYutx-lYXwgTZw0kXZl9GAkIOc4Yz3Dr06rndWphZ25kSWyF64aTqT3W4cOxz0eB5LfAss5i9WAR-ZPWVaifijsABLqzEYwHY=h500';
   public activeAuction: any[] = [];
   isVisible = false;
+  form: FormGroup;
 
-  constructor(private lanuchService: LaunchService) {
-    this.lanuchService.getLaunchByType(LaunchTypeEnum.Credit).subscribe({
+  constructor(private launchService: LaunchService, private fb: FormBuilder) {
+    
+    this.form = this.fb.group({
+      description: [null, [Validators.required]],
+      value: [null, [Validators.required]],
+      category: [null, [Validators.required]],
+      wallet: [null, [Validators.required]],
+      launchDate: [null, [Validators.required]],
+    })
+
+    this.launchService.getLaunchByType(LaunchTypeEnum.Credit).subscribe({
       next: (resp) => {
         this.launchs = resp.data as launch[];
       },
@@ -90,6 +101,9 @@ export class RevenueCardComponent {
       },
     ];
   }
+  ngOnInit(): void {
+    
+  }
 
   showModal(): void {
     this.isVisible = true;
@@ -98,10 +112,35 @@ export class RevenueCardComponent {
   handleOk(): void {
     console.log('Button ok clicked!');
     this.isVisible = false;
+    const input: launchInput = this.getInput();
+    this.launchService.add(input).subscribe({
+      next: (resp: any) => {
+        ///launch message success
+      },
+      error: (error: any) => {
+
+      }
+    })
+  }
+  getInput(): launchInput {
+    const input: launchInput = {
+      description: this.form.value.description,
+      value: this.form.value.value,
+      categoryId: this.form.value.category,
+      isInstallment: this.form.value.isInstallment,
+      launchDate: this.form.value.launchDate,
+      planId: this.form.value.planId,
+      walletId: this.form.value.walletId
+    }
+    return input;
   }
 
   handleCancel(): void {
     console.log('Button cancel clicked!');
     this.isVisible = false;
+  }
+
+  save(): void {
+
   }
 }

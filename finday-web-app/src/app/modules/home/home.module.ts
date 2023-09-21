@@ -5,6 +5,8 @@ import { HomeRoutingModule } from './home-routing.module';
 import { WalletsModule } from '../wallets/wallets.module';
 import { PlanModule } from '../plan/plan.module';
 import { LaunchModule } from '../launch/launch.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -14,6 +16,9 @@ import { LaunchModule } from '../launch/launch.module';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
     HomeRoutingModule,
     WalletsModule,
     PlanModule,

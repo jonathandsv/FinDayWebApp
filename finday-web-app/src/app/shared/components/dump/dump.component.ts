@@ -9,10 +9,11 @@ import { FormGroup } from '@angular/forms';
 export class DumpComponent implements OnInit {
 
     // #81
-    @Input() dumpFormGroup: FormGroup;
+    @Input() dumpFormGroup: FormGroup | null = null;
     listaCampos: string[] = [];
 
     constructor() { 
+        
     }
 
     ngOnInit() {
@@ -20,7 +21,7 @@ export class DumpComponent implements OnInit {
     }
 
     listarCampos() {
-        Object.keys((this.dumpFormGroup.controls)).forEach(campo => {
+        Object.keys(((this.dumpFormGroup as any).controls)).forEach(campo => {
             this.listaCampos.push(campo);
         });
     }

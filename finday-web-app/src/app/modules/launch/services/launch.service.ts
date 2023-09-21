@@ -5,7 +5,7 @@ import { Observable, take } from 'rxjs';
 import { ApiOutput } from 'src/app/core/interfaces/api-output.inteface';
 import { environment } from 'src/environments/environment';
 
-import { LaunchTypeEnum, launch } from '../interfaces/launch.interface';
+import { LaunchTypeEnum, launch, launchInput } from '../interfaces/launch.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +20,10 @@ import { LaunchTypeEnum, launch } from '../interfaces/launch.interface';
         let params = new HttpParams();
         params = params.set('launchTypeEnum', launchTypeEnum ? launchTypeEnum : 1);
       return this.http.get<ApiOutput<launch[]>>(`${this.url}/by-type`, { params }).pipe(take(1));
+    }
+
+    add(input: launchInput): Observable<ApiOutput<boolean>> {
+      return this.http.post<ApiOutput<boolean>>(`${this.url}`, input).pipe(take(1))
     }
   }
   

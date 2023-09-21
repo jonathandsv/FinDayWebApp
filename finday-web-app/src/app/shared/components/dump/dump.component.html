@@ -19,7 +19,7 @@
                     [class.text-danger]="dumpFormGroup.get(campo)?.invalid">
                     <b>{{ dumpFormGroup.get(campo)?.valid }}</b>
                 </td>
-                <td><i *ngIf="dumpFormGroup.get(campo).errors">{{ dumpFormGroup.get(campo)?.errors | json }}</i></td>
+                <td><i *ngIf="dumpFormGroup.get(campo)?.errors">{{ dumpFormGroup.get(campo)?.errors | json }}</i></td>
             </tr>
         </tbody>
     </table>

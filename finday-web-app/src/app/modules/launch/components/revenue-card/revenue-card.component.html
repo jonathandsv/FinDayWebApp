@@ -1,49 +1,62 @@
 <nz-modal [(nzVisible)]="isVisible" nzTitle="Adicionar Entrada" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
-[nzClassName]="'flex-col rounded-lg bg-white px-1 py-1 dark:bg-night-700 sm:flex-row'">
+  [nzClassName]="'flex-col rounded-lg bg-white px-1 py-1 dark:bg-night-700 sm:flex-row'">
   <ng-container *nzModalContent>
-    <div class="space-y-3 text-left">
+    <!-- <app-dump [dumpFormGroup]="form"></app-dump> -->
+    <form [formGroup]="form" (ngSubmit)="save()" class="space-y-3 text-left">
       <div class="relative">
-        <input type="text" id="email" class="peer block" placeholder=" " />
+        <input type="text" 
+          formControlName="description"
+          id="description" class="peer block" placeholder=" " />
         <label
-          for="email"
+          for="description"
           class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-500 dark:bg-night-700 dark:text-night-200">
           Descrição
         </label>
+        <app-field-errors [control]="form.get('description')">
+        </app-field-errors>
       </div>
       <div class="relative">
-        <input type="password" id="password" class="peer block" placeholder=" " />
+        <input type="text" id="value" formControlName="value" class="peer block" placeholder=" " />
         <label
-          for="password"
+          for="value"
           class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-600 dark:bg-night-700 dark:text-night-200">
           Valor
         </label>
+        <app-field-errors [control]="form.get('value')">
+        </app-field-errors>
       </div>
       <div class="relative">
-        <input type="password" id="password" class="peer block" placeholder=" " />
+        <input type="text" id="category" formControlName="category" class="peer block" placeholder=" " />
         <label
-          for="password"
+          for="category"
           class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-600 dark:bg-night-700 dark:text-night-200">
           Categoria
         </label>
+        <app-field-errors [control]="form.get('category')">
+        </app-field-errors>
       </div>
       <div class="relative">
-        <input type="password" id="password" class="peer block" placeholder=" " />
+        <input type="text" id="wallet" formControlName="wallet" class="peer block" placeholder=" " />
         <label
-          for="password"
+          for="wallet"
           class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-600 dark:bg-night-700 dark:text-night-200">
           Fonte
         </label>
+        <app-field-errors [control]="form.get('wallet')">
+        </app-field-errors>
       </div>
       
       <div class="relative">
-        <input type="password" id="password" class="peer block" placeholder=" " />
+        <input type="text" id="launchDate" formControlName="launchDate" class="peer block" placeholder=" " />
         <label
-          for="password"
+          for="launchDate"
           class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-600 dark:bg-night-700 dark:text-night-200">
           Data do Lançamento
         </label>
+        <app-field-errors [control]="form.get('launchDate')">
+        </app-field-errors>
       </div>
-    </div>
+    </form>
   </ng-container>
   <div *nzModalFooter>
     <div class="mt-6 flex items-center justify-between">

@@ -2,6 +2,8 @@ import { Component, Host, Input, OnInit, SkipSelf } from '@angular/core';
 import {
   AbstractControl,
   AbstractControlDirective,
+  FormArray,
+  FormGroup,
   FormGroupDirective,
   ValidationErrors,
 } from '@angular/forms';
@@ -79,7 +81,10 @@ export class FieldErrorsComponent implements OnInit {
   addCustomMessages(): void { }
 
   getControlName(c: AbstractControl): string | null {
-    const formGroup = c.parent.controls;
-    return Object.keys(formGroup).find((name) => c === formGroup[name]) || null;
+    if (c != null) {
+      const formGroup = (c.parent as any).controls;
+      return Object.keys(formGroup).find((name: any) => c === formGroup[name]) || null;
+    }
+    return null;
   }
 }

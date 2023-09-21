@@ -11,6 +11,9 @@ import {
   MenuUnfoldOutline
 } from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 const icons: IconDefinition[] = [MenuFoldOutline, MenuUnfoldOutline];
 
@@ -24,8 +27,12 @@ const icons: IconDefinition[] = [MenuFoldOutline, MenuUnfoldOutline];
   ],
   imports: [
     CommonModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
     NzModalModule,
-    NzIconModule.forChild(icons)
+    NzIconModule.forChild(icons),
+    SharedModule,
   ],
   exports: [
     RevenueCardComponent,
