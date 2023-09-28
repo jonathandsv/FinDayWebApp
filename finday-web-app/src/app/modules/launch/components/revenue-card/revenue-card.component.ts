@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LaunchTypeEnum, launch, launchInput } from '../../interfaces/launch.interface';
 import { LaunchService } from '../../services/launch.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ICategory } from '../../interfaces/category.interface';
+import { ApiOutput } from 'src/app/core/interfaces/api-output.inteface';
 
 @Component({
   selector: 'app-revenue-card',
@@ -14,6 +16,8 @@ export class RevenueCardComponent implements OnInit {
   public activeAuction: any[] = [];
   isVisible = false;
   form: FormGroup;
+  launchTypeEnumOptions = LaunchTypeEnum;
+  listCategories: ICategory[] = [];
 
   constructor(private launchService: LaunchService, private fb: FormBuilder) {
     
@@ -102,7 +106,17 @@ export class RevenueCardComponent implements OnInit {
     ];
   }
   ngOnInit(): void {
-    
+    this.getCategories();  
+  }
+  getCategories(): void {
+    this.launchService.getCategoriesByType(LaunchTypeEnum.Credit).subscribe({
+      next: (resp: ApiOutput<ICategory[]>) => {
+        this.listCategories = resp.data as ICategory[];
+      },
+      error: (error: any) => {
+        console.error('error when get categories', error);
+      }
+    });
   }
 
   showModal(): void {
@@ -112,15 +126,7 @@ export class RevenueCardComponent implements OnInit {
   handleOk(): void {
     console.log('Button ok clicked!');
     this.isVisible = false;
-    const input: launchInput = this.getInput();
-    this.launchService.add(input).subscribe({
-      next: (resp: any) => {
-        ///launch message success
-      },
-      error: (error: any) => {
-
-      }
-    })
+    this.save();
   }
   getInput(): launchInput {
     const input: launchInput = {
@@ -141,7 +147,25 @@ export class RevenueCardComponent implements OnInit {
   }
 
   save(): void {
+    if (this.form.invalid) {
+      return 
+    }
 
+    const input: launchInput = this.getInput();
+    this.launchService.add(input).subscribe({
+      next: (resp: any) => {
+        ///launch message success
+      },
+      error: (error: any) => {
+
+      }
+    })
+
+
+  }
+
+  getObject() {
+    throw new Error('Method not implemented.');
   }
 
   //Date

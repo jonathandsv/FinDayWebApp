@@ -6,6 +6,7 @@ import { ApiOutput } from 'src/app/core/interfaces/api-output.inteface';
 import { environment } from 'src/environments/environment';
 
 import { LaunchTypeEnum, launch, launchInput } from '../interfaces/launch.interface';
+import { ICategory } from '../interfaces/category.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -24,6 +25,12 @@ import { LaunchTypeEnum, launch, launchInput } from '../interfaces/launch.interf
 
     add(input: launchInput): Observable<ApiOutput<boolean>> {
       return this.http.post<ApiOutput<boolean>>(`${this.url}`, input).pipe(take(1))
+    }
+
+    getCategoriesByType(launchTypeEnum: LaunchTypeEnum): Observable<ApiOutput<ICategory[]>> {
+      let params = new HttpParams();
+      params = params.set('launchTypeEnum', launchTypeEnum ? launchTypeEnum : 1);
+      return this.http.get<ApiOutput<ICategory[]>>(`${environment.API_FINDAY}/category/by-type`, { params }).pipe(take(1));
     }
   }
   

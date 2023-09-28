@@ -26,7 +26,9 @@
         </app-field-errors>
       </div>
       <div class="relative">
-        <input type="text" id="category" formControlName="category" class="peer block" placeholder=" " />
+        <select name="category" id="category" formControlName="category">
+          <option *ngFor="let category of listCategories" [ngValue]="category.id">{{category.name}}</option>
+        </select>
         <label
           for="category"
           class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-600 dark:bg-night-700 dark:text-night-200">
