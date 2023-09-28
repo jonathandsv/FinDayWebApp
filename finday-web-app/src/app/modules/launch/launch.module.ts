@@ -12,10 +12,19 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ExpensesComponent } from './components/expenses/expenses.component';
 import { RevenueCardComponent } from './components/revenue-card/revenue-card.component';
 import { LaunchComponent } from './launch.component';
+import { CURRENCY_MASK_CONFIG, CurrencyMaskConfig, CurrencyMaskModule } from 'ng2-currency-mask';
 
 const icons: IconDefinition[] = [MenuFoldOutline, MenuUnfoldOutline];
 
-
+export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
+  align: "right",
+  allowNegative: false,
+  decimal: ",",
+  precision: 2,
+  prefix: "",
+  suffix: "",
+  thousands: "."
+};
 
 @NgModule({
   declarations: [
@@ -31,11 +40,15 @@ const icons: IconDefinition[] = [MenuFoldOutline, MenuUnfoldOutline];
     NzModalModule,
     NzIconModule.forChild(icons),
     SharedModule,
-    NzDatePickerModule
+    NzDatePickerModule,
+    CurrencyMaskModule
   ],
   exports: [
     RevenueCardComponent,
     ExpensesComponent
-  ]
+  ],
+  providers: [
+    { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
+  ],
 })
 export class LaunchModule { }

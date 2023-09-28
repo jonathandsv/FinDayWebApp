@@ -4,6 +4,8 @@ import { LaunchService } from '../../services/launch.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ICategory } from '../../interfaces/category.interface';
 import { ApiOutput } from 'src/app/core/interfaces/api-output.inteface';
+import { WalletService } from 'src/app/modules/wallets/services/wallet.service';
+import { IWallet } from 'src/app/modules/wallets/interfaces/wallet.interface';
 
 @Component({
   selector: 'app-revenue-card',
@@ -18,8 +20,11 @@ export class RevenueCardComponent implements OnInit {
   form: FormGroup;
   launchTypeEnumOptions = LaunchTypeEnum;
   listCategories: ICategory[] = [];
+  listWallets: IWallet[] = [];
 
-  constructor(private launchService: LaunchService, private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private launchService: LaunchService,
+    private walletService: WalletService) {
     
     this.form = this.fb.group({
       description: [null, [Validators.required]],
@@ -29,14 +34,7 @@ export class RevenueCardComponent implements OnInit {
       launchDate: [null, [Validators.required]],
     })
 
-    this.launchService.getLaunchByType(LaunchTypeEnum.Credit).subscribe({
-      next: (resp) => {
-        this.launchs = resp.data as launch[];
-      },
-      error: (error) => {
-        console.error('ao obter lancamentos de entrada');
-      }
-    })
+    this.getLaunchsRevenue();
     this.activeAuction = [
       {
         id: 1346771,
@@ -105,8 +103,32 @@ export class RevenueCardComponent implements OnInit {
       },
     ];
   }
+
   ngOnInit(): void {
     this.getCategories();  
+    this.getWallets();  
+  }
+
+  getLaunchsRevenue(): void {
+    this.launchService.getLaunchByType(LaunchTypeEnum.Credit).subscribe({
+      next: (resp) => {
+        this.launchs = resp.data as launch[];
+      },
+      error: (error) => {
+        console.error('ao obter lancamentos de entrada');
+      }
+    })
+  }
+
+  getWallets(): void {
+    this.walletService.getWalletsForUser(LaunchTypeEnum.Credit).subscribe({
+      next: (resp: ApiOutput<IWallet[]>) => {
+        this.listWallets = resp.data as IWallet[];
+      },
+      error: (error: any) => {
+        console.error('error when get categories', error);
+      }
+    });
   }
   getCategories(): void {
     this.launchService.getCategoriesByType(LaunchTypeEnum.Credit).subscribe({
@@ -128,6 +150,12 @@ export class RevenueCardComponent implements OnInit {
     this.isVisible = false;
     this.save();
   }
+  
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
+  }
+
   getInput(): launchInput {
     const input: launchInput = {
       description: this.form.value.description,
@@ -136,14 +164,9 @@ export class RevenueCardComponent implements OnInit {
       isInstallment: this.form.value.isInstallment,
       launchDate: this.form.value.launchDate,
       planId: this.form.value.planId,
-      walletId: this.form.value.walletId
+      walletId: this.form.value.wallet
     }
     return input;
-  }
-
-  handleCancel(): void {
-    console.log('Button cancel clicked!');
-    this.isVisible = false;
   }
 
   save(): void {
@@ -155,6 +178,7 @@ export class RevenueCardComponent implements OnInit {
     this.launchService.add(input).subscribe({
       next: (resp: any) => {
         ///launch message success
+        this.getLaunchsRevenue();
       },
       error: (error: any) => {
 
