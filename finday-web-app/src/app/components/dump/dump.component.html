@@ -1,0 +1,38 @@
+<div style="margin-top: 20px" *ngIf="dumpFormGroup">
+    <b
+        >Formulário válido:
+        <i
+            [class.text-success]="dumpFormGroup.valid"
+            [class.text-danger]="dumpFormGroup.invalid"
+            >{{ dumpFormGroup.valid }}</i
+        ></b
+    >
+    <table
+        class="table table-bordered m-table m-table--border-brand m-table--head-bg-brand"
+    >
+        <thead>
+            <tr>
+                <th>CAMPO</th>
+                <th>VALOR</th>
+                <th>VALIDO</th>
+                <th>ERROS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                *ngFor="let campo of listaCampos"
+                [class.bg-light]="dumpFormGroup.get(campo)?.invalid"
+            >
+                <td>{{ campo }}</td>
+                <td>{{ dumpFormGroup.get(campo)?.value | json }}</td>
+                <td
+                    [class.text-success]="dumpFormGroup.get(campo)?.valid"
+                    [class.text-danger]="dumpFormGroup.get(campo)?.invalid"
+                >
+                    <b>{{ dumpFormGroup.get(campo)?.valid }}</b>
+                </td>
+                <td><i *ngIf="dumpFormGroup.get(campo)?.errors">{{ dumpFormGroup.get(campo)?.errors | json }}</i></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
