@@ -1,16 +1,22 @@
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule, JsonPipe, Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormsModule, NgForm, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { NgbAlertModule, NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
-import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { JsonPipe } from '@angular/common';
+import {
+  NgbAccordionModule,
+  NgbAlertModule,
+  NgbDateAdapter,
+  NgbDateParserFormatter,
+  NgbDatepickerI18n,
+  NgbDatepickerModule,
+  NgbDateStruct,
+  NgbDropdownModule,
+  NgbPopoverModule,
+} from '@ng-bootstrap/ng-bootstrap';
+
 import { CustomAdapter, CustomDateParserFormatter } from '../../services/datepicker-adapter.service';
-import { DumpComponent } from '../../components/dump/dump.component';
 import { CustomDatepickerI18n, I18n } from '../../services/datepicker-i18n.service';
+import { FormUtilsService } from '../../services/form/form-utils.service';
 
 @Component({
   selector: 'app-launch',
@@ -48,7 +54,8 @@ export class LaunchComponent implements OnInit {
   constructor(
     private fb: NonNullableFormBuilder,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private formUtilsService: FormUtilsService
     ) {}
   
   ngOnInit(): void {
@@ -64,7 +71,17 @@ export class LaunchComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.form.invalid) {
+      this.formUtilsService.validateAllFormFields(this.form);
+      return;
+    }
+    else {
+      this.save();
+    }
+  }
 
+  save(): void {
+    throw new Error('Method not implemented.');
   }
 
   cleanForm(): void {
