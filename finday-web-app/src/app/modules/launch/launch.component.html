@@ -2,6 +2,7 @@
 <hr />
 <div class="row card-body">
     <div class="col-md-12 col-lg-12">
+        <!-- <app-dump [dumpFormGroup]="form"></app-dump> -->
         <form [formGroup]="form" 
             (ngSubmit)="onSubmit()"
             #formTemplate="ngForm"
@@ -76,12 +77,22 @@
                         [class.is-invalid]="form.get('timesInstallment')?.errors  && (form.get('timesInstallment')?.dirty || form.get('timesInstallment')?.touched)"
                         [class.is-valid]="!form.get('timesInstallment')?.errors  && (form.get('timesInstallment')?.dirty || form.get('timesInstallment')?.touched)">
                 </div>
-                <div class="col-sm-12">
+                <div class="col-12">
                     <label for="launchDate" class="form-label">Data do Lançamento:</label>
-                    <input type="text" class="form-control" 
-                        formControlName="launchDate" id="launchDate" placeholder=""
-                        [class.is-invalid]="form.get('launchDate')?.errors  && (form.get('launchDate')?.dirty || form.get('launchDate')?.touched)"
-                        [class.is-valid]="!form.get('launchDate')?.errors  && (form.get('launchDate')?.dirty || form.get('launchDate')?.touched)">
+                    <div class="input-group">
+                        <input
+                            class="form-control"
+                            placeholder="dd-mm-yyyy"
+                            formControlName="launchDate"
+                            name="launchDate"
+                            ngbDatepicker
+                            #d="ngbDatepicker"
+                            [class.is-invalid]="form.get('launchDate')?.errors  && (form.get('launchDate')?.dirty || form.get('launchDate')?.touched)"
+                            [class.is-valid]="!form.get('launchDate')?.errors  && (form.get('launchDate')?.dirty || form.get('launchDate')?.touched)"/>
+                        <button class="btn btn-outline-primary" (click)="d.toggle()" type="button">
+                            <i class="fa-solid fa-calendar"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer mt-2">
