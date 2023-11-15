@@ -2,58 +2,91 @@
 <hr />
 <div class="row card-body">
     <div class="col-md-12 col-lg-12">
-        <form class="needs-validation">
+        <form [formGroup]="form" 
+            (ngSubmit)="onSubmit()"
+            #formTemplate="ngForm"
+            class="needs-validation">
             <div class="row g-3">
                 <div class="col-sm-12">
-                    <label for="nome" class="form-label">Descrição:</label>
-                    <input type="text" class="form-control" id="descricao" placeholder="">
+                    <label for="description" class="form-label">Descrição:</label>
+                    <input type="text" 
+                        class="form-control"
+                        formControlName="description"
+                        id="description" placeholder=""
+                        [class.is-invalid]="form.get('description')?.errors  && (form.get('description')?.dirty || form.get('description')?.touched)"
+                        [class.is-valid]="!form.get('description')?.errors  && (form.get('description')?.dirty || form.get('description')?.touched)">
                 </div>
                 <div class="col-sm-12">
-                    <label for="nome" class="form-label">Valor:</label>
-                    <input type="text" class="form-control" id="descricao" placeholder="">
+                    <label for="value" class="form-label">Valor:</label>
+                    <input type="number" class="form-control" 
+                        formControlName="value" id="value" 
+                        placeholder=""
+                        [class.is-invalid]="form.get('value')?.errors  && (form.get('value')?.dirty || form.get('value')?.touched)"
+                        [class.is-valid]="!form.get('value')?.errors  && (form.get('value')?.dirty || form.get('value')?.touched)">
                 </div>
                 <div class="col-sm-12">
-                    <label for="nome" class="form-label">Categoria:</label>
-                    <input type="text" class="form-control" id="descricao" placeholder="">
+                    <label for="category" class="form-label">Categoria:</label>
+                    <select formControlName="category" 
+                        class="form-select" id="category"
+                        [class.is-invalid]="form.get('category')?.errors  && (form.get('category')?.dirty || form.get('category')?.touched)"
+                        [class.is-valid]="!form.get('category')?.errors  && (form.get('category')?.dirty || form.get('category')?.touched)">
+                        <option value="">Selecione</option>
+                        <option [ngValue]="'1'">Categoria 1</option>
+                        <option [ngValue]="'2'">Categoria 2</option>
+                    </select>
                 </div>
                 <div class="col-sm-12">
-                    <label for="nome" class="form-label">Fonte (Wallet):</label>
-                    <input type="text" class="form-control" id="descricao" placeholder="">
+                    <label for="wallet" class="form-label">Fonte (Wallet):</label>
+                    <input type="text" class="form-control" id="wallet" 
+                        formControlName="wallet" placeholder=""
+                        [class.is-invalid]="form.get('wallet')?.errors  && (form.get('wallet')?.dirty || form.get('wallet')?.touched)"
+                        [class.is-valid]="!form.get('wallet')?.errors  && (form.get('wallet')?.dirty || form.get('wallet')?.touched)">
                 </div>
                 <div class="col-sm-12">
                     <label for="nome" class="form-label">Parcelado:</label>
                     <div class="form-check">
-                        <input class="form-check-input" 
+                        <input class="form-check-input"
+                            formControlName="isInstallment" 
                             type="radio" 
-                            name="flexRadioDefault" 
-                            id="flexRadioDefault1">
+                            name="isInstallment" 
+                            id="isInstallment"
+                            [value]="true">
                         <label class="form-check-label" 
-                            for="flexRadioDefault1">
+                            for="IsInstallment">
                             Sim
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" 
-                            type="radio" name="flexRadioDefault" 
-                            id="flexRadioDefault2"
-                            checked>
+                            formControlName="isInstallment"
+                            type="radio" name="isInstallment" 
+                            id="isInstallment"
+                            [value]="false">
                         <label class="form-check-label" 
-                            for="flexRadioDefault2">
+                            for="IsInstallment">
                             Não
                         </label>
                     </div>
                 </div>
                 <div class="col-sm-12">
-                    <label for="nome" class="form-label">Quantas vezes:</label>
-                    <input type="text" class="form-control" id="descricao" placeholder="">
+                    <label for="timesInstallment" class="form-label">Quantas vezes:</label>
+                    <input type="number" class="form-control" 
+                        formControlName="timesInstallment"
+                        id="timesInstallment" placeholder=""
+                        [class.is-invalid]="form.get('timesInstallment')?.errors  && (form.get('timesInstallment')?.dirty || form.get('timesInstallment')?.touched)"
+                        [class.is-valid]="!form.get('timesInstallment')?.errors  && (form.get('timesInstallment')?.dirty || form.get('timesInstallment')?.touched)">
                 </div>
                 <div class="col-sm-12">
-                    <label for="nome" class="form-label">Data do Lançamento:</label>
-                    <input type="text" class="form-control" id="descricao" placeholder="">
+                    <label for="launchDate" class="form-label">Data do Lançamento:</label>
+                    <input type="text" class="form-control" 
+                        formControlName="launchDate" id="launchDate" placeholder=""
+                        [class.is-invalid]="form.get('launchDate')?.errors  && (form.get('launchDate')?.dirty || form.get('launchDate')?.touched)"
+                        [class.is-valid]="!form.get('launchDate')?.errors  && (form.get('launchDate')?.dirty || form.get('launchDate')?.touched)">
                 </div>
             </div>
             <div class="modal-footer mt-2">
-                <button type="button" class="btn btn-light">
+                <button type="button" class="btn btn-light"
+                    (click)="cleanForm()">
                     Limpar
                 </button>
                 <button type="submit" class="btn btn-primary ms-1">
