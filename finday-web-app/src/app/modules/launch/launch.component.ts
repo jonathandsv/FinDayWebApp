@@ -26,7 +26,6 @@ import { CustomDatepickerI18n, I18n } from '../../services/datepicker-i18n.servi
     NgbDropdownModule,
     NgbDatepickerModule,
     JsonPipe,
-    DumpComponent
   ],
   templateUrl: './launch.component.html',
   styleUrl: './launch.component.scss',
