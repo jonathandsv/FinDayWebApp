@@ -13,8 +13,8 @@ import {
   NgbDropdownModule,
   NgbPopoverModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import { catchError, Observable, of, switchMap, tap } from 'rxjs';
 
-import { ApiOutput } from '../../interfaces/api-output.interface';
 import { CustomAdapter, CustomDateParserFormatter } from '../../services/datepicker-adapter.service';
 import { CustomDatepickerI18n, I18n } from '../../services/datepicker-i18n.service';
 import { FormUtilsService } from '../../services/form/form-utils.service';
@@ -23,7 +23,6 @@ import { WalletService } from '../wallet/services/wallet.service';
 import { Category } from './interfaces/category.interface';
 import { launchInput, LaunchTypeEnum } from './interfaces/launch.interface';
 import { LaunchService } from './services/launch.service';
-import { Observable, catchError, of, pluck, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-launch',
