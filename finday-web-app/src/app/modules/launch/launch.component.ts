@@ -14,9 +14,16 @@ import {
   NgbPopoverModule,
 } from '@ng-bootstrap/ng-bootstrap';
 
+import { ApiOutput } from '../../interfaces/api-output.interface';
 import { CustomAdapter, CustomDateParserFormatter } from '../../services/datepicker-adapter.service';
 import { CustomDatepickerI18n, I18n } from '../../services/datepicker-i18n.service';
 import { FormUtilsService } from '../../services/form/form-utils.service';
+import { Wallet } from '../wallet/interfaces/wallet.interface';
+import { WalletService } from '../wallet/services/wallet.service';
+import { Category } from './interfaces/category.interface';
+import { launchInput, LaunchTypeEnum } from './interfaces/launch.interface';
+import { LaunchService } from './services/launch.service';
+import { Observable, catchError, of, pluck, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-launch',
@@ -31,7 +38,7 @@ import { FormUtilsService } from '../../services/form/form-utils.service';
     NgbPopoverModule,
     NgbDropdownModule,
     NgbDatepickerModule,
-    JsonPipe,
+    JsonPipe
   ],
   templateUrl: './launch.component.html',
   styleUrl: './launch.component.scss',
@@ -50,13 +57,24 @@ export class LaunchComponent implements OnInit {
     month: this.currentDate.getMonth() + 1, 
     day: this.currentDate.getDate() 
   };
+  launchTypeEnumOptions = LaunchTypeEnum;
+  listCategories: Category[] = [];
+  listWallets: Wallet[] = [];
+
+  categories$: Observable<Category[]>;
+  wallets$: Observable<Wallet[]>;
 
   constructor(
     private fb: NonNullableFormBuilder,
     private route: ActivatedRoute,
     private location: Location,
-    private formUtilsService: FormUtilsService
-    ) {}
+    private formUtilsService: FormUtilsService,
+    private launchService: LaunchService,
+    private walletService: WalletService
+    ) {
+      this.categories$ = this.getCategories();
+      this.wallets$ = this.getWallets();
+    }
   
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -81,11 +99,57 @@ export class LaunchComponent implements OnInit {
   }
 
   save(): void {
-    throw new Error('Method not implemented.');
+    const input: launchInput = this.getInput();
+    this.launchService.add(input).subscribe({
+      next: (resp) => {
+        alert('Cadastrado com sucesso');
+        this.cleanForm();
+      },
+      error: (error) => {
+        console.error('Error add launch', error);
+      }
+    })
+  }
+
+  getInput(): launchInput {
+    const input: launchInput = {
+      description: this.form.value.description,
+      value: this.form.value.value,
+      categoryId: this.form.value.category,
+      isInstallment: this.form.value.isInstallment,
+      launchDate: this.form.value.launchDate,
+      planId: this.form.value.planId,
+      walletId: this.form.value.wallet
+    }
+    return input;
   }
 
   cleanForm(): void {
     this.form.reset();
     this.formTemplate.resetForm();
+  }
+
+  getWallets(): Observable<Wallet[]> {
+    return this.walletService
+      .getWalletsForUser(LaunchTypeEnum.Credit)
+        .pipe(
+          tap((resp) => this.listWallets = resp.data as Wallet[]),
+          switchMap((resp) => of(resp.data as Wallet[])),
+          catchError(val => {
+            console.error(`error when get wallets`, val);
+            return of([]);
+           }));
+  }
+
+  getCategories(): Observable<Category[]> {
+    return this.launchService
+      .getCategoriesByType(LaunchTypeEnum.Credit)
+        .pipe(
+          tap((resp) => this.listCategories = resp.data as Category[]),
+          switchMap((resp) => of(resp.data as Category[])),
+          catchError(val => {
+            console.error(`error when get categories`, val);
+            return of([]);
+           }));
   }
 }

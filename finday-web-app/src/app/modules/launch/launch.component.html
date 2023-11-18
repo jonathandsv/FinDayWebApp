@@ -32,16 +32,22 @@
                         [class.is-invalid]="form.get('category')?.errors  && (form.get('category')?.dirty || form.get('category')?.touched)"
                         [class.is-valid]="!form.get('category')?.errors  && (form.get('category')?.dirty || form.get('category')?.touched)">
                         <option value="">Selecione</option>
-                        <option [ngValue]="'1'">Categoria 1</option>
-                        <option [ngValue]="'2'">Categoria 2</option>
+                        @for (category of categories$ | async; track category.id) {
+                            <option [ngValue]="category.id">{{category.name}}</option>
+                        }
                     </select>
                 </div>
                 <div class="col-sm-12">
                     <label for="wallet" class="form-label">Fonte (Wallet):</label>
-                    <input type="text" class="form-control" id="wallet" 
-                        formControlName="wallet" placeholder=""
+                    <select formControlName="wallet" 
+                        class="form-select" id="wallet"
                         [class.is-invalid]="form.get('wallet')?.errors  && (form.get('wallet')?.dirty || form.get('wallet')?.touched)"
                         [class.is-valid]="!form.get('wallet')?.errors  && (form.get('wallet')?.dirty || form.get('wallet')?.touched)">
+                        <option value="">Selecione</option>
+                        @for (wallet of wallets$ | async; track wallet.id) {
+                            <option [ngValue]="wallet.id">{{wallet.name}}</option>
+                        }
+                    </select>
                 </div>
                 <div class="col-sm-12">
                     <label for="nome" class="form-label">Parcelado:</label>

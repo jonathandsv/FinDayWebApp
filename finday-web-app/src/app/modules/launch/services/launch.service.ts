@@ -5,7 +5,7 @@ import { Observable, take } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
 import { ApiOutput } from '../../../interfaces/api-output.interface';
-import { ICategory } from '../interfaces/category.interface';
+import { Category } from '../interfaces/category.interface';
 import { launch, launchInput, LaunchTypeEnum } from '../interfaces/launch.interface';
 
 @Injectable({
@@ -26,9 +26,9 @@ export class LaunchService {
       return this.http.post<ApiOutput<boolean>>(`${this.url}`, input).pipe(take(1))
     }
 
-    getCategoriesByType(launchTypeEnum: LaunchTypeEnum): Observable<ApiOutput<ICategory[]>> {
+    getCategoriesByType(launchTypeEnum: LaunchTypeEnum): Observable<ApiOutput<Category[]>> {
       let params = new HttpParams();
       params = params.set('launchTypeEnum', launchTypeEnum ? launchTypeEnum : 1);
-      return this.http.get<ApiOutput<ICategory[]>>(`${environment.API}/category/by-type`, { params }).pipe(take(1));
+      return this.http.get<ApiOutput<Category[]>>(`${environment.API}/category/by-type`, { params }).pipe(take(1));
     }
 }

@@ -1,6 +1,6 @@
 import { LaunchTypeEnum } from "./launch.interface";
 
-export interface ICategory {
+export interface Category {
     id?: string;
     name?: string;
     description?: string;
