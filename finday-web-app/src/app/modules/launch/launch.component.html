@@ -34,6 +34,8 @@
                         <option value="">Selecione</option>
                         @for (category of categories$ | async; track category.id) {
                             <option [ngValue]="category.id">{{category.name}}</option>
+                        } @empty {
+                            <option value="" disabled>Nenhuma Categoria Encontrada.</option>
                         }
                     </select>
                 </div>
@@ -46,6 +48,8 @@
                         <option value="">Selecione</option>
                         @for (wallet of wallets$ | async; track wallet.id) {
                             <option [ngValue]="wallet.id">{{wallet.name}}</option>
+                        } @empty {
+                            <option value="" disabled>Nenhuma Fonte Encontrada.</option>
                         }
                     </select>
                 </div>
