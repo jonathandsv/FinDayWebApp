@@ -1,6 +1,6 @@
 import { CommonModule, JsonPipe, Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormsModule, NgForm, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, NgForm, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import {
   NgbAccordionModule,
@@ -78,7 +78,7 @@ export class LaunchComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       description: ['', [Validators.required]],
-      value: ['', [Validators.required]],
+      value: ['', [Validators.required, Validators.min(1)]],
       category: ['', [Validators.required]],
       wallet: ['', [Validators.required]],
       isInstallment: [false, [Validators.required]],
@@ -116,11 +116,15 @@ export class LaunchComponent implements OnInit {
       value: this.form.value.value,
       categoryId: this.form.value.category,
       isInstallment: this.form.value.isInstallment,
-      launchDate: this.form.value.launchDate,
+      launchDate: this.convertDate(this.form.value.launchDate),
       planId: this.form.value.planId,
       walletId: this.form.value.wallet
     }
     return input;
+  }
+  convertDate(value: NgbDateStruct): Date {
+    const date = new Date(value.year, value.month - 1, value.day);
+    return date;
   }
 
   cleanForm(): void {
