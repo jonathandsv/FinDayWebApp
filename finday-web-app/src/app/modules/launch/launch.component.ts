@@ -15,13 +15,14 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, Observable, of, switchMap, tap } from 'rxjs';
 
+import { ConvertDateService } from '../../services/converts/convert-date.service';
 import { CustomAdapter, CustomDateParserFormatter } from '../../services/datepicker-adapter.service';
 import { CustomDatepickerI18n, I18n } from '../../services/datepicker-i18n.service';
 import { FormUtilsService } from '../../services/form/form-utils.service';
 import { Wallet } from '../wallet/interfaces/wallet.interface';
 import { WalletService } from '../wallet/services/wallet.service';
 import { Category } from './interfaces/category.interface';
-import { launchInput, LaunchTypeEnum } from './interfaces/launch.interface';
+import { launch, launchInput, LaunchTypeEnum } from './interfaces/launch.interface';
 import { LaunchService } from './services/launch.service';
 
 @Component({
@@ -68,6 +69,7 @@ export class LaunchComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private formUtilsService: FormUtilsService,
+    private convertDateService: ConvertDateService,
     private launchService: LaunchService,
     private walletService: WalletService
     ) {
@@ -76,14 +78,19 @@ export class LaunchComponent implements OnInit {
     }
   
   ngOnInit(): void {
+    const launch: launch = this.route.snapshot.data['launch'];
+
     this.form = this.fb.group({
-      description: ['', [Validators.required]],
-      value: ['', [Validators.required, Validators.min(1)]],
+      description: [launch.description, [Validators.required]],
+      value: [launch.value, [Validators.required, Validators.min(1)]],
       category: ['', [Validators.required]],
       wallet: ['', [Validators.required]],
-      isInstallment: [false, [Validators.required]],
+      isInstallment: [launch.isInstallment, [Validators.required]],
       timesInstallment: [0, [Validators.required]],
-      launchDate: [this.currenteDateObject, [Validators.required]]
+      launchDate: [launch.launchDate ? 
+        this.convertDateService.convertDateToNgbDateStruct(launch.launchDate) : 
+        this.currenteDateObject, 
+        [Validators.required]]
     });
   }
 
@@ -116,15 +123,11 @@ export class LaunchComponent implements OnInit {
       value: this.form.value.value,
       categoryId: this.form.value.category,
       isInstallment: this.form.value.isInstallment,
-      launchDate: this.convertDate(this.form.value.launchDate),
+      launchDate: this.convertDateService.convertNgbDateStructToDate(this.form.value.launchDate),
       planId: this.form.value.planId,
       walletId: this.form.value.wallet
     }
     return input;
-  }
-  convertDate(value: NgbDateStruct): Date {
-    const date = new Date(value.year, value.month - 1, value.day);
-    return date;
   }
 
   cleanForm(): void {
