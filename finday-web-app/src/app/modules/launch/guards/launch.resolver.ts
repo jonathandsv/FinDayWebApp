@@ -14,7 +14,9 @@ export const launchResolver: ResolveFn<Observable<launch>> = (route, state) => {
         tap((resp) => console.log('valor do lancamento: ', resp)));
   }
 
-  const launch: launch = {};
+  const launch: launch = {
+    isInstallment: false,
+  };
 
   return of(launch);
 };

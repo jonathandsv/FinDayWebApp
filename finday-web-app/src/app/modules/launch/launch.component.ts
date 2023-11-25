@@ -86,12 +86,18 @@ export class LaunchComponent implements OnInit {
       category: ['', [Validators.required]],
       wallet: ['', [Validators.required]],
       isInstallment: [launch.isInstallment, [Validators.required]],
-      timesInstallment: [0, [Validators.required]],
+      timesInstallment: [{value: 0, disabled: true}],
       launchDate: [launch.launchDate ? 
         this.convertDateService.convertDateToNgbDateStruct(launch.launchDate) : 
         this.currenteDateObject, 
         [Validators.required]]
     });
+
+    this.form.get('isInstallment')?.valueChanges.subscribe({
+      next: (resp) => {
+        this.setTimesInstallment();
+      }
+    })
   }
 
   onSubmit(): void {
@@ -157,5 +163,20 @@ export class LaunchComponent implements OnInit {
             console.error(`error when get categories`, val);
             return of([]);
            }));
+  }
+
+  setTimesInstallment(): void {
+    const isInstallment: boolean = this.form.get('isInstallment')?.value;
+
+    if (isInstallment) {
+      this.form.get('timesInstallment')?.enable();
+      this.form.get('timesInstallment')?.setValidators([Validators.required, Validators.min(1)]);
+      this.form.get('timesInstallment')?.updateValueAndValidity();
+    }
+    else {
+      this.form.get('timesInstallment')?.disable();
+      this.form.get('timesInstallment')?.clearValidators();
+      this.form.get('timesInstallment')?.updateValueAndValidity();
+    }
   }
 }

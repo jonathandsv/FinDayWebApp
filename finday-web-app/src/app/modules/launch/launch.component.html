@@ -61,7 +61,8 @@
                             type="radio" 
                             name="isInstallment" 
                             id="isInstallment"
-                            [value]="true">
+                            [value]="true"
+                            >
                         <label class="form-check-label" 
                             for="IsInstallment">
                             Sim
@@ -72,21 +73,24 @@
                             formControlName="isInstallment"
                             type="radio" name="isInstallment" 
                             id="isInstallment"
-                            [value]="false">
+                            [value]="false"
+                            >
                         <label class="form-check-label" 
                             for="IsInstallment">
                             Não
                         </label>
                     </div>
                 </div>
-                <div class="col-sm-12">
-                    <label for="timesInstallment" class="form-label">Quantas vezes:</label>
-                    <input type="number" class="form-control" 
-                        formControlName="timesInstallment"
-                        id="timesInstallment" placeholder=""
-                        [class.is-invalid]="form.get('timesInstallment')?.errors  && (form.get('timesInstallment')?.dirty || form.get('timesInstallment')?.touched)"
-                        [class.is-valid]="!form.get('timesInstallment')?.errors  && (form.get('timesInstallment')?.dirty || form.get('timesInstallment')?.touched)">
-                </div>
+                @if (this.form.get('isInstallment')?.value == true) {
+                    <div class="col-sm-12">
+                        <label for="timesInstallment" class="form-label">Quantas vezes:</label>
+                        <input type="number" class="form-control" 
+                            formControlName="timesInstallment"
+                            id="timesInstallment" placeholder=""
+                            [class.is-invalid]="form.get('timesInstallment')?.errors  && (form.get('timesInstallment')?.dirty || form.get('timesInstallment')?.touched)"
+                            [class.is-valid]="!form.get('timesInstallment')?.errors  && (form.get('timesInstallment')?.dirty || form.get('timesInstallment')?.touched)">
+                    </div>
+                } 
                 <div class="col-12">
                     <label for="launchDate" class="form-label">Data do Lançamento:</label>
                     <div class="input-group">
