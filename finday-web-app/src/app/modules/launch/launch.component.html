@@ -110,10 +110,12 @@
                 </div>
             </div>
             <div class="modal-footer mt-2">
-                <button type="button" class="btn btn-light"
-                    (click)="cleanForm()">
-                    Limpar
-                </button>
+                @if (!launch.id) {
+                    <button type="button" class="btn btn-light"
+                        (click)="cleanForm()">
+                        Limpar
+                    </button>
+                }
                 <button type="submit" class="btn btn-primary ms-1">
                     Salvar
                 </button>

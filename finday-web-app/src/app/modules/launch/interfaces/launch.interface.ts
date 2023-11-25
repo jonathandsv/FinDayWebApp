@@ -3,6 +3,7 @@ export interface launch {
     walletId?: string;
     description?: string;
     isInstallment?: boolean;
+    timesInstallment?: number;
     launchDate?: any;
     value?: number;
     categoryId?: string;
@@ -19,9 +20,11 @@ export enum LaunchTypeEnum {
 }
 
 export interface launchInput {
+    id?: string;
     walletId?: string;
     description?: string;
     isInstallment?: boolean;
+    timesInstallment?: number;
     launchDate?: any;
     value?: number;
     categoryId?: string;

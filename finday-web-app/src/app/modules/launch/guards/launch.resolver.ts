@@ -16,6 +16,7 @@ export const launchResolver: ResolveFn<Observable<launch>> = (route, state) => {
 
   const launch: launch = {
     isInstallment: false,
+    timesInstallment: 0
   };
 
   return of(launch);

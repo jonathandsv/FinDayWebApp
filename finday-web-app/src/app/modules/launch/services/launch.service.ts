@@ -31,6 +31,10 @@ export class LaunchService {
     add(input: launchInput): Observable<ApiOutput<boolean>> {
       return this.http.post<ApiOutput<boolean>>(`${this.url}`, input).pipe(take(1))
     }
+    
+    update(input: launchInput): Observable<ApiOutput<boolean>> {
+      return this.http.put<ApiOutput<boolean>>(`${this.url}`, input).pipe(take(1))
+    }
 
     getCategoriesByType(launchTypeEnum: LaunchTypeEnum): Observable<ApiOutput<Category[]>> {
       let params = new HttpParams();

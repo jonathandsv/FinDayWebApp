@@ -24,6 +24,7 @@ import { WalletService } from '../wallet/services/wallet.service';
 import { Category } from './interfaces/category.interface';
 import { launch, launchInput, LaunchTypeEnum } from './interfaces/launch.interface';
 import { LaunchService } from './services/launch.service';
+import { DumpComponent } from '../../components/dump/dump.component';
 
 @Component({
   selector: 'app-launch',
@@ -38,7 +39,8 @@ import { LaunchService } from './services/launch.service';
     NgbPopoverModule,
     NgbDropdownModule,
     NgbDatepickerModule,
-    JsonPipe
+    JsonPipe,
+    DumpComponent
   ],
   templateUrl: './launch.component.html',
   styleUrl: './launch.component.scss',
@@ -63,6 +65,7 @@ export class LaunchComponent implements OnInit {
 
   categories$: Observable<Category[]>;
   wallets$: Observable<Wallet[]>;
+  launch!: launch;
 
   constructor(
     private fb: NonNullableFormBuilder,
@@ -78,26 +81,28 @@ export class LaunchComponent implements OnInit {
     }
   
   ngOnInit(): void {
-    const launch: launch = this.route.snapshot.data['launch'];
+    this.launch = this.route.snapshot.data['launch'];
 
     this.form = this.fb.group({
-      description: [launch.description, [Validators.required]],
-      value: [launch.value, [Validators.required, Validators.min(1)]],
+      description: [this.launch.description, [Validators.required]],
+      value: [this.launch.value, [Validators.required, Validators.min(1)]],
       category: ['', [Validators.required]],
       wallet: ['', [Validators.required]],
-      isInstallment: [launch.isInstallment, [Validators.required]],
-      timesInstallment: [{value: 0, disabled: true}],
-      launchDate: [launch.launchDate ? 
-        this.convertDateService.convertDateToNgbDateStruct(launch.launchDate) : 
+      isInstallment: [this.launch.isInstallment, [Validators.required]],
+      timesInstallment: [{value: this.launch.timesInstallment, disabled: this.launch.isInstallment ? true : false }],
+      launchDate: [this.launch.launchDate ? 
+        this.convertDateService.convertDateToNgbDateStruct(this.launch.launchDate) : 
         this.currenteDateObject, 
         [Validators.required]]
     });
 
+    if (this.launch.isInstallment) this.setTimesInstallment();
+
     this.form.get('isInstallment')?.valueChanges.subscribe({
-      next: (resp) => {
+      next: () => {
         this.setTimesInstallment();
       }
-    })
+    });
   }
 
   onSubmit(): void {
@@ -111,6 +116,15 @@ export class LaunchComponent implements OnInit {
   }
 
   save(): void {
+    if (this.launch.id) {
+      this.update();
+    }
+    else {
+      this.add();
+    }
+  }
+
+  private add(): void {
     const input: launchInput = this.getInput();
     this.launchService.add(input).subscribe({
       next: (resp) => {
@@ -120,7 +134,20 @@ export class LaunchComponent implements OnInit {
       error: (error) => {
         console.error('Error add launch', error);
       }
-    })
+    });
+  }
+  
+  private update(): void {
+    const input: launchInput = this.getInput();
+    input.id = this.launch.id;
+    this.launchService.update(input).subscribe({
+      next: (resp) => {
+        alert('Alterado com sucesso');
+      },
+      error: (error) => {
+        console.error('Error update launch', error);
+      }
+    });
   }
 
   getInput(): launchInput {
@@ -129,6 +156,7 @@ export class LaunchComponent implements OnInit {
       value: this.form.value.value,
       categoryId: this.form.value.category,
       isInstallment: this.form.value.isInstallment,
+      timesInstallment: this.form.value.timesInstallment,
       launchDate: this.convertDateService.convertNgbDateStructToDate(this.form.value.launchDate),
       planId: this.form.value.planId,
       walletId: this.form.value.wallet
@@ -145,8 +173,9 @@ export class LaunchComponent implements OnInit {
     return this.walletService
       .getWalletsForUser(LaunchTypeEnum.Credit)
         .pipe(
-          tap((resp) => this.listWallets = resp.data as Wallet[]),
           switchMap((resp) => of(resp.data as Wallet[])),
+          tap((listWallets) => this.listWallets = listWallets),
+          tap((listWallets) => this.fillWallet(listWallets)),
           catchError(val => {
             console.error(`error when get wallets`, val);
             return of([]);
@@ -157,12 +186,25 @@ export class LaunchComponent implements OnInit {
     return this.launchService
       .getCategoriesByType(LaunchTypeEnum.Credit)
         .pipe(
-          tap((resp) => this.listCategories = resp.data as Category[]),
           switchMap((resp) => of(resp.data as Category[])),
+          tap((listCategories) => this.listCategories = listCategories),
+          tap((listCategories) => this.fillCategory(listCategories)),
           catchError(val => {
             console.error(`error when get categories`, val);
             return of([]);
            }));
+  }
+
+  fillCategory(resp: Category[]): void {
+    if (this.launch.id) {
+      this.form.get('category')?.setValue(resp.find(x => x.id == this.launch.categoryId)?.id);
+    }
+  }
+  fillWallet(resp: Wallet[]): void {
+    debugger
+    if (this.launch.id) {
+      this.form.get('wallet')?.setValue(resp.find(x => x.id == this.launch.walletId)?.id);
+    }
   }
 
   setTimesInstallment(): void {
