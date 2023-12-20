@@ -22,4 +22,7 @@ describe('LaunchComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('teste', () => {
+    expect(true).toBeTruthy();
+  });
 });

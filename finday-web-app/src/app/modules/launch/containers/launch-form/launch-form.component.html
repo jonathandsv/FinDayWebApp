@@ -1,0 +1,126 @@
+<h3 class="mt-2">Lançamento</h3>
+<button class="btn btn-outline-primary btn-sm" (click)="backToList()">Voltar</button>
+<hr />
+<div class="row card-body">
+    <div class="col-md-12 col-lg-12">
+        <!-- <app-dump [dumpFormGroup]="form"></app-dump> -->
+        <form [formGroup]="form" 
+            (ngSubmit)="onSubmit()"
+            #formTemplate="ngForm"
+            class="needs-validation">
+            <div class="row g-3">
+                <div class="col-sm-12">
+                    <label for="description" class="form-label">Descrição:</label>
+                    <input type="text" 
+                        class="form-control"
+                        formControlName="description"
+                        id="description" placeholder=""
+                        [class.is-invalid]="form.get('description')?.errors  && (form.get('description')?.dirty || form.get('description')?.touched)"
+                        [class.is-valid]="!form.get('description')?.errors  && (form.get('description')?.dirty || form.get('description')?.touched)">
+                </div>
+                <div class="col-sm-12">
+                    <label for="value" class="form-label">Valor:</label>
+                    <input type="number" class="form-control" 
+                        formControlName="value" id="value" 
+                        placeholder=""
+                        [class.is-invalid]="form.get('value')?.errors  && (form.get('value')?.dirty || form.get('value')?.touched)"
+                        [class.is-valid]="!form.get('value')?.errors  && (form.get('value')?.dirty || form.get('value')?.touched)">
+                </div>
+                <div class="col-sm-12">
+                    <label for="category" class="form-label">Categoria:</label>
+                    <select formControlName="category" 
+                        class="form-select" id="category"
+                        [class.is-invalid]="form.get('category')?.errors  && (form.get('category')?.dirty || form.get('category')?.touched)"
+                        [class.is-valid]="!form.get('category')?.errors  && (form.get('category')?.dirty || form.get('category')?.touched)">
+                        <option value="">Selecione</option>
+                        @for (category of categories$ | async; track category.id) {
+                            <option [ngValue]="category.id">{{category.name}}</option>
+                        } @empty {
+                            <option value="" disabled>Nenhuma Categoria Encontrada.</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-sm-12">
+                    <label for="wallet" class="form-label">Fonte (Wallet):</label>
+                    <select formControlName="wallet" 
+                        class="form-select" id="wallet"
+                        [class.is-invalid]="form.get('wallet')?.errors  && (form.get('wallet')?.dirty || form.get('wallet')?.touched)"
+                        [class.is-valid]="!form.get('wallet')?.errors  && (form.get('wallet')?.dirty || form.get('wallet')?.touched)">
+                        <option value="">Selecione</option>
+                        @for (wallet of wallets$ | async; track wallet.id) {
+                            <option [ngValue]="wallet.id">{{wallet.name}}</option>
+                        } @empty {
+                            <option value="" disabled>Nenhuma Fonte Encontrada.</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-sm-12">
+                    <label for="nome" class="form-label">Parcelado:</label>
+                    <div class="form-check">
+                        <input class="form-check-input"
+                            formControlName="isInstallment" 
+                            type="radio" 
+                            name="isInstallment" 
+                            id="isInstallment"
+                            [value]="true"
+                            >
+                        <label class="form-check-label" 
+                            for="IsInstallment">
+                            Sim
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" 
+                            formControlName="isInstallment"
+                            type="radio" name="isInstallment" 
+                            id="isInstallment"
+                            [value]="false"
+                            >
+                        <label class="form-check-label" 
+                            for="IsInstallment">
+                            Não
+                        </label>
+                    </div>
+                </div>
+                @if (this.form.get('isInstallment')?.value == true) {
+                    <div class="col-sm-12">
+                        <label for="timesInstallment" class="form-label">Quantas vezes:</label>
+                        <input type="number" class="form-control" 
+                            formControlName="timesInstallment"
+                            id="timesInstallment" placeholder=""
+                            [class.is-invalid]="form.get('timesInstallment')?.errors  && (form.get('timesInstallment')?.dirty || form.get('timesInstallment')?.touched)"
+                            [class.is-valid]="!form.get('timesInstallment')?.errors  && (form.get('timesInstallment')?.dirty || form.get('timesInstallment')?.touched)">
+                    </div>
+                } 
+                <div class="col-12">
+                    <label for="launchDate" class="form-label">Data do Lançamento:</label>
+                    <div class="input-group">
+                        <input
+                            class="form-control"
+                            placeholder="dd-mm-yyyy"
+                            formControlName="launchDate"
+                            name="launchDate"
+                            ngbDatepicker
+                            #d="ngbDatepicker"
+                            [class.is-invalid]="form.get('launchDate')?.errors  && (form.get('launchDate')?.dirty || form.get('launchDate')?.touched)"
+                            [class.is-valid]="!form.get('launchDate')?.errors  && (form.get('launchDate')?.dirty || form.get('launchDate')?.touched)"/>
+                        <button class="btn btn-outline-primary" (click)="d.toggle()" type="button">
+                            <i class="fa-solid fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer mt-2">
+                @if (!launch.id) {
+                    <button type="button" class="btn btn-light"
+                        (click)="cleanForm()">
+                        Limpar
+                    </button>
+                }
+                <button type="submit" class="btn btn-primary ms-1">
+                    Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

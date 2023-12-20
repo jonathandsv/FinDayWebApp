@@ -1,56 +1,23 @@
-import { CommonModule, JsonPipe, Location } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormsModule, NgForm, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import {
-  NgbAccordionModule,
-  NgbAlertModule,
-  NgbDateAdapter,
-  NgbDateParserFormatter,
-  NgbDatepickerI18n,
-  NgbDatepickerModule,
-  NgbDateStruct,
-  NgbDropdownModule,
-  NgbPopoverModule,
-} from '@ng-bootstrap/ng-bootstrap';
+import { Component, ViewChild } from '@angular/core';
+import { FormGroup, NgForm, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, Observable, of, switchMap, tap } from 'rxjs';
 
-import { ConvertDateService } from '../../services/converts/convert-date.service';
-import { CustomAdapter, CustomDateParserFormatter } from '../../services/datepicker-adapter.service';
-import { CustomDatepickerI18n, I18n } from '../../services/datepicker-i18n.service';
-import { FormUtilsService } from '../../services/form/form-utils.service';
-import { Wallet } from '../wallet/interfaces/wallet.interface';
-import { WalletService } from '../wallet/services/wallet.service';
-import { Category } from './interfaces/category.interface';
-import { launch, launchInput, LaunchTypeEnum } from './interfaces/launch.interface';
-import { LaunchService } from './services/launch.service';
-import { DumpComponent } from '../../components/dump/dump.component';
+import { ConvertDateService } from '../../../../services/converts/convert-date.service';
+import { FormUtilsService } from '../../../../services/form/form-utils.service';
+import { Wallet } from '../../../wallet/interfaces/wallet.interface';
+import { WalletService } from '../../../wallet/services/wallet.service';
+import { Category } from '../../interfaces/category.interface';
+import { launch, launchInput, LaunchTypeEnum } from '../../interfaces/launch.interface';
+import { LaunchService } from '../../services/launch.service';
 
 @Component({
-  selector: 'app-launch',
-  //standalone: true,
-  // imports: [
-  //   CommonModule, 
-  //   // ReactiveFormsModule,
-  //   // FormsModule,
-  //   // RouterModule,
-  //   // NgbAlertModule,
-  //   // NgbAccordionModule,
-  //   // NgbPopoverModule,
-  //   // NgbDropdownModule,
-  //   // NgbDatepickerModule,
-  //   // JsonPipe,
-  //   // DumpComponent
-  // ],
-  templateUrl: './launch.component.html',
-  styleUrl: './launch.component.scss',
-  // providers: [
-	// 	{ provide: NgbDateAdapter, useClass: CustomAdapter },
-	// 	{ provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },
-  //   I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }
-	// ],
+  selector: 'app-launch-form',
+  templateUrl: './launch-form.component.html',
+  styleUrl: './launch-form.component.scss'
 })
-export class LaunchComponent implements OnInit {
+export class LaunchFormComponent {
   @ViewChild('formTemplate') public formTemplate!: NgForm;
   form!: FormGroup
   currentDate = new Date();
@@ -69,8 +36,8 @@ export class LaunchComponent implements OnInit {
 
   constructor(
     private fb: NonNullableFormBuilder,
-    private route: ActivatedRoute,
-    private location: Location,
+    private activeRoute: ActivatedRoute,
+    private router: Router,
     private formUtilsService: FormUtilsService,
     private convertDateService: ConvertDateService,
     private launchService: LaunchService,
@@ -81,22 +48,22 @@ export class LaunchComponent implements OnInit {
     }
   
   ngOnInit(): void {
-    this.launch = this.route.snapshot.data['launch'];
+    this.launch = this.activeRoute.snapshot.data['launch'];
 
     this.form = this.fb.group({
-      description: ['', [Validators.required]],
-      value: ['', [Validators.required, Validators.min(1)]],
+      description: [this.launch.description, [Validators.required]],
+      value: [this.launch.value, [Validators.required, Validators.min(1)]],
       category: ['', [Validators.required]],
       wallet: ['', [Validators.required]],
-      isInstallment: ['', [Validators.required]],
-      timesInstallment: [{value: '', disabled: '' ? true : false }],
-      launchDate: ['' ? 
-        this.convertDateService.convertDateToNgbDateStruct('') : 
+      isInstallment: [this.launch.isInstallment, [Validators.required]],
+      timesInstallment: [{value: this.launch.timesInstallment, disabled: this.launch.isInstallment ? true : false }],
+      launchDate: [this.launch.launchDate ? 
+        this.convertDateService.convertDateToNgbDateStruct(this.launch.launchDate) : 
         this.currenteDateObject, 
         [Validators.required]]
     });
 
-    // if (this.launch.isInstallment) this.setTimesInstallment();
+    if (this.launch.isInstallment) this.setTimesInstallment();
 
     this.form.get('isInstallment')?.valueChanges.subscribe({
       next: () => {
@@ -220,5 +187,9 @@ export class LaunchComponent implements OnInit {
       this.form.get('timesInstallment')?.clearValidators();
       this.form.get('timesInstallment')?.updateValueAndValidity();
     }
+  }
+
+  backToList() {
+    this.router.navigate([`launch`]);
   }
 }
