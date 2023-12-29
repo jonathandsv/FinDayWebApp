@@ -7,6 +7,7 @@ export interface launch {
     launchDate?: any;
     value?: number;
     categoryId?: string;
+    categoryName?: string;
     userId?: string;
     userName?: string;
     planId?: string;

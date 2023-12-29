@@ -19,10 +19,10 @@
             <tbody>
               @for (launch of launchs$ | async; track launch.id) {
                 <tr>
-                  <th scope="row">{{launch.id}}</th>
+                  <th scope="row"></th>
                   <th>{{launch.value}}</th>
                   <td>{{launch.description}}</td>
-                  <td>{{launch.categoryId}}</td>
+                  <td>{{launch.categoryName}}</td>
                   <td>
                     <button type="button" class="btn btn-success" routerLink="edit/{{launch.id}}"
                       style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
