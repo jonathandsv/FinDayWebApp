@@ -1,0 +1,11 @@
+table > thead tr th div.ordering {
+    float: right;
+}
+
+table thead tr th div.ordering .fa-sort-down {
+    margin-left: -9px;
+}
+
+table thead tr th div.ordering .opacityOrdering {
+    opacity: 50%;
+}

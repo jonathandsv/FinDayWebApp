@@ -5,43 +5,10 @@
     <button class="btn btn-primary btn-sm me-md-2" type="button" routerLink="new">Adicionar</button>
   </div>
   <div class="col-md-12 col-lg-12">
-      <div class="table-responsive">
-        <table class="table table-hover table-responsive ">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Valor</th>
-                <th scope="col">Descrição</th>
-                <th scope="col">Categoria</th>
-                <th>#</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (launch of launchs$ | async; track launch.id) {
-                <tr>
-                  <th scope="row"></th>
-                  <th>{{launch.value}}</th>
-                  <td>{{launch.description}}</td>
-                  <td>{{launch.categoryName}}</td>
-                  <td>
-                    <button type="button" class="btn btn-success" routerLink="edit/{{launch.id}}"
-                      style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                      <i class="fa-solid fa-pencil"></i>
-                    </button>
-                  </td>
-                </tr>
-              }
-            </tbody>
-        </table>
-      </div>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          @for (page of visiblePages; track page) {
-            <li class="page-item"><a class="page-link" href="#">{{page}}</a></li>
-          }
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-      </nav>
+      <app-table 
+        [columns]="columns"
+        [records]="launchs$ | async"
+        (onEdit)="edit($event)">
+      </app-table>
   </div>
 </div>

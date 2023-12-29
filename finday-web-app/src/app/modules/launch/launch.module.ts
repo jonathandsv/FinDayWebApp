@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { NgbAccordionModule, NgbAlertModule, NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerI18n, NgbDatepickerModule, NgbDropdownModule, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomAdapter, CustomDateParserFormatter } from '../../services/datepicker-adapter.service';
 import { CustomDatepickerI18n, I18n } from '../../services/datepicker-i18n.service';
+import { TableComponent } from '../../shared/components/table/container/table/table.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CustomDatepickerI18n, I18n } from '../../services/datepicker-i18n.servi
     NgbDropdownModule,
     NgbDatepickerModule,
     JsonPipe,
+    TableComponent
   ],
   providers: [
 		{ provide: NgbDateAdapter, useClass: CustomAdapter },
