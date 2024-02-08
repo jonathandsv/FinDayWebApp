@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-const KEY = 'authToken';
+const KEY = 'eap.token';
 
 @Injectable({
   providedIn: 'root',
