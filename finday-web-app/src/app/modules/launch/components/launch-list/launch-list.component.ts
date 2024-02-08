@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LaunchService } from '../../services/launch.service';
 import { LaunchTypeEnum, launch } from '../../interfaces/launch.interface';
 import { Observable, of, switchMap, tap } from 'rxjs';
+import { ColumnTable } from '../../../../shared/components/table/container/table/table.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-launch-list',
@@ -14,8 +16,10 @@ export class LaunchListComponent implements OnInit {
   public totalPages = 10;
   public visibleRangeLength = 5;
   public visiblePages: number[] = [];
+  columns: ColumnTable[] = [];
 
-  constructor(private launchService: LaunchService) {
+  constructor(private router: Router,
+    private launchService: LaunchService) {
     
     this.launchs$ = this.launchService
       .getLaunchByType(LaunchTypeEnum.Debit)
@@ -27,7 +31,19 @@ export class LaunchListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.buildColumnsTable();
+  }
+
+  buildColumnsTable() {
+    this.columns = [
+      { id: 1, field: 'value', order: '', header: 'Valor', width: 10},
+      { id: 2, field: 'description', order: '', header: 'Descrição', width: 65},
+      { id: 3, field: 'categoryName', order: '', header: 'Categoria', width: 20}
+    ]
+  }
+
+  edit(launch: launch): void  {
+    this.router.navigate([`launch/edit/${launch.id}`]);
   }
 
   private updateVisiblePages(): void {

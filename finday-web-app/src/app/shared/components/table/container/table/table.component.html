@@ -1,0 +1,49 @@
+<table class="table table-striped table-bordered table-sm table-header-border-color">
+    <thead>
+        <tr>
+            @for (column of columns; track column.id) {
+                <th scope="col" width="{{ column.width }}%" (click)="sort(column)" class="align-middle {{column.headerCss}}">
+                    <span>{{column.header}}</span>
+                    @if (column.field && sortable) {
+                        <div class="ordering">
+                            <i class="fa-solid fa-sort-up" 
+                                [ngClass]="{'opacityOrdering' : !column.order || column.order != 'asc'}">
+                            </i>
+                            <i class="fa-solid fa-sort-down" 
+                                [ngClass]="{'opacityOrdering' : !column.order || column.order != 'desc'}">
+                            </i>
+                        </div>
+                    }
+                </th>
+            }
+            <th width="5%">#</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (record of records; track record.id; let idx = $index) {
+            <tr>
+                @for (column of columns; track column.id) {
+                    <td class="align-middle p-2 {{column.css}}">
+                        @if (column.displayField) {
+                            {{record[column.displayField]}}    
+                        } @else {
+                            {{record[column.field]}}
+                        }
+                    </td>
+                }
+                <td class="align-middle p-2">
+                    <button type="button" class="btn btn-success" (click)="edit(record)"
+                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                        <i class="fa-solid fa-pencil"></i>
+                    </button>
+                </td>
+            </tr>
+        } @empty {
+            <tr class="text-center">
+                <td [attr.colspan]="columns.length + 1">
+                    Nenhum registro encontrado. 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
