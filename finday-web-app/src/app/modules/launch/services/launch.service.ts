@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of, switchMap, take } from 'rxjs';
+import { Observable, take } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
 import { ApiOutput } from '../../../interfaces/api-output.interface';
