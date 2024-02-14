@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { AccountRoutingModule } from './account.routing.module';
+import { FieldErrorsComponent } from '../../components/field-errors/field-errors.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { AccountRoutingModule } from './account.routing.module';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    AccountRoutingModule
+    AccountRoutingModule,
+    FieldErrorsComponent
   ]
 })
 export class AccountModule { }

@@ -14,7 +14,9 @@ import { AccountService } from '../services/account.service';
 export class LoginComponent {
   form!: FormGroup
   actualDate = new Date;
-  year: number = this.actualDate.getFullYear()
+  year: number = this.actualDate.getFullYear();
+  loading: boolean = false;
+
 
   constructor(private fb: NonNullableFormBuilder,
     public router: Router,
@@ -30,6 +32,7 @@ export class LoginComponent {
   action(): void {
     let loginUser: LoginUser = { email: '', password: ''};
     loginUser = Object.assign({}, loginUser, this.form.value);
+    this.loading = true;
     // this.loading = true;
     this.accountService.login(loginUser)
     .subscribe({
@@ -43,6 +46,7 @@ export class LoginComponent {
   }
 
   processSuccess(response: any) {
+    this.loading = false;
     this.form.reset;
     
     this.localStorageLoginService.saveUserLocalData(response.data);
@@ -59,6 +63,7 @@ export class LoginComponent {
   }
 
   processFail(fail: any) {
+    this.loading = false;
     // this.errors = fail.error.errors;
     // this.toastr.error('Ocorreu um erro!', 'Opa :(');
     // this.loading = false;
