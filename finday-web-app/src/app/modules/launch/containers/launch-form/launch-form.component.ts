@@ -163,6 +163,7 @@ export class LaunchFormComponent {
   }
 
   fillCategory(resp: Category[]): void {
+    debugger
     if (this.launch.id) {
       this.form.get('category')?.setValue(resp.find(x => x.id == this.launch.categoryId)?.id);
     }

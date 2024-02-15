@@ -11,7 +11,7 @@ export const privateAreaGuard = () => {
   function validateGuardToken() {
     const tokenExpired = tokenService.tokenExpired();
     const usuario = tokenService.decryptToken();
-    debugger
+ 
     if (tokenExpired) {
       router.navigate(['/login']);
     }

@@ -7,6 +7,7 @@ import { environment } from '../../../../environments/environment';
 import { ApiOutput } from '../../../interfaces/api-output.interface';
 import { Category } from '../interfaces/category.interface';
 import { launch, launchInput, LaunchTypeEnum } from '../interfaces/launch.interface';
+import { Paged } from '../../../interfaces/paged.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,12 @@ export class LaunchService {
   url = `${environment.API}/launch`;
   
     constructor(protected http: HttpClient, protected router: Router) {}
+
+    getLaunchList(): Observable<ApiOutput<Paged<launch>>> {
+      // let params = new HttpParams();
+      // params = params.set('launchTypeEnum', launchTypeEnum ? launchTypeEnum : 1);
+      return this.http.get<ApiOutput<Paged<launch>>>(`${this.url}/list`).pipe(take(1));
+    }
   
     getLaunchByType(launchTypeEnum: LaunchTypeEnum): Observable<ApiOutput<launch[]>> {
         let params = new HttpParams();

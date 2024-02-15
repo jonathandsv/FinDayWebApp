@@ -4,6 +4,7 @@ import { LaunchTypeEnum, launch } from '../../interfaces/launch.interface';
 import { Observable, of, switchMap, tap } from 'rxjs';
 import { ColumnTable } from '../../../../shared/components/table/container/table/table.component';
 import { Router } from '@angular/router';
+import { Paged } from '../../../../interfaces/paged.interface';
 
 @Component({
   selector: 'app-launch-list',
@@ -22,11 +23,12 @@ export class LaunchListComponent implements OnInit {
     private launchService: LaunchService) {
     
     this.launchs$ = this.launchService
-      .getLaunchByType(LaunchTypeEnum.Debit)
+      .getLaunchList()
       .pipe(
-        switchMap((resp) => of(resp.data as launch[])),
-        tap((resp) => this.totalPages = resp.length),
-        tap((resp) => this.updateVisiblePages())
+        switchMap((resp) => of(resp.data as Paged<launch>)),
+        tap((resp) => this.totalPages = resp.total),
+        tap((resp) => this.updateVisiblePages()),
+        switchMap((resp) => of(resp.records))
       );
   }
 
