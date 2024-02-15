@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageLoginService } from '../../../services/localstorage/localstorage-login.service';
 import { LoginUser } from '../models/login-user.interface';
 import { AccountService } from '../services/account.service';
+import { FormUtilsService } from '../../../services/form/form-utils.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent {
     public router: Router,
     public activatedRoute: ActivatedRoute,
     private accountService: AccountService,
-    private localStorageLoginService: LocalStorageLoginService) {
+    private localStorageLoginService: LocalStorageLoginService,
+    private formUtilsService: FormUtilsService) {
     this.form = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
@@ -30,8 +32,10 @@ export class LoginComponent {
   }
 
   action(): void {
-    if (this.form.invalid)
+    if (this.form.invalid) {
+      this.formUtilsService.validateAllFormFields(this.form);
       return
+    }
     
     let loginUser: LoginUser = { email: '', password: ''};
     loginUser = Object.assign({}, loginUser, this.form.value);
