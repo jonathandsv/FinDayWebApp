@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { LocalStorageLoginService } from './services/localstorage/localstorage-login.service';
+import { ToastsContainer } from './components/toast/toast-container.component';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import { LocalStorageLoginService } from './services/localstorage/localstorage-l
   imports: [
     CommonModule, 
     RouterOutlet,
-    RouterLink
+    RouterLink,
+    ToastsContainer
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']

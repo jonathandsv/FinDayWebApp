@@ -4,6 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 
 import { TokenService } from '../services/token.service';
 import { Router } from '@angular/router';
+import { ToastService } from '../components/toast/toast.service';
 
 
 export function errorInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn)
@@ -11,48 +12,47 @@ export function errorInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn)
     const tokenService = inject(TokenService);
     const expired = tokenService.tokenExpired();
     const router: Router = inject(Router);
+    const toastService = inject(ToastService);
 
       return next(req).pipe(
         catchError((error: any) => {
-            errorMessage(req.url, router);
+            errorMessage(error, router, toastService);
             //this._loading.setLoading(false, req.url);
             return throwError(() => error);
         })
       );
 }
 
-function errorMessage(ex: any, router: Router) {
-debugger
+function errorMessage(ex: any, router: Router, toastService: ToastService) {
     if (ex.status === 400) {
       if (!!ex.error) {
         if (typeof ex.error === 'object') {
           if (Array.isArray(ex.error?.messages)) {
-            // emitirMensagem(this.messageService, 'warn', ex.error.messages.join('\n'));
-            alert(ex.error.messages.join('\n'));
+            toastService.show({ message: ex.error.messages.join('\n'), classname: 'bg-info text-light', delay: 10000 });
           } else {
-            alert(ex.error.message);
+            toastService.show({ message: ex.error.message, classname: 'bg-info text-light', delay: 10000 });
           }
         } else {
-          alert(ex.error);
+          toastService.show({ message: ex.error, classname: 'bg-danger text-light', delay: 10000 });
         }
       }
       return;
     }
     else if (ex.status === 401) {
-      alert(`Usuário não autorizado. \n É necessário realizar o login.`);
+      toastService.show({ message: `Usuário não autorizado. \n É necessário realizar o login.`, classname: 'bg-danger text-light', delay: 10000 });
       router.navigate(['/login']);
       return;
     } else if (ex.status === 403) {
-        alert("Usuário não autorizado");
+        toastService.show({ message: `Usuário não autorizado.`, classname: 'bg-danger text-light', delay: 10000 });
         return;
     }
     else if (ex.status === 404) {
-      alert('o recurso URI não foi encontrado.');
+      toastService.show({ message: `o recurso URI não foi encontrado.`, classname: 'bg-danger text-light', delay: 10000 });
       return;
     } else if (ex.status === 500) {
-      alert('Houve um erro interno na aplicação, por favor tente novamente mais tarde ou consulte o suporte');
+      toastService.show({ message: 'Houve um erro interno na aplicação, por favor tente novamente mais tarde ou consulte o suporte', classname: 'bg-danger text-light', delay: 10000 });
       return;
     } else {
-      alert('Serviço indisponível.');
+      toastService.show({ message: 'Serviço indisponível.', classname: 'bg-danger text-light', delay: 10000 });
     }
   }

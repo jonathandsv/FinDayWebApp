@@ -30,10 +30,12 @@ export class LoginComponent {
   }
 
   action(): void {
+    if (this.form.invalid)
+      return
+    
     let loginUser: LoginUser = { email: '', password: ''};
     loginUser = Object.assign({}, loginUser, this.form.value);
     this.loading = true;
-    // this.loading = true;
     this.accountService.login(loginUser)
     .subscribe({
       next: (resp) => this.processSuccess(resp),
@@ -50,23 +52,10 @@ export class LoginComponent {
     this.form.reset;
     
     this.localStorageLoginService.saveUserLocalData(response.data);
-    // const toast = this.toastr.success('Login realizado com Sucesso!', 'Bem vindo!!!');
     this.router.navigate(['/launch']);
-    // if (toast) {
-    //   toast.onHidden.subscribe(() => {
-    //     this.loading = false;
-    //     this.returnUrl
-    //     ? this.router.navigate([this.returnUrl])
-    //     : this.router.navigate(['/home']);
-    //   })
-    // }
   }
 
   processFail(fail: any) {
     this.loading = false;
-    // this.errors = fail.error.errors;
-    // this.toastr.error('Ocorreu um erro!', 'Opa :(');
-    // this.loading = false;
   }
-
 }
