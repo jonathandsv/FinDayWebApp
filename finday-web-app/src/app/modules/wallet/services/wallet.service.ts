@@ -16,7 +16,7 @@ export class WalletService {
 
   constructor(protected http: HttpClient, protected router: Router) { }
 
-  getWalletsForUser(month: number): Observable<ApiOutput<Wallet[]>> {
+  getWalletsForUser(): Observable<ApiOutput<Wallet[]>> {
     return this.http.get<ApiOutput<Wallet[]>>(`${this.url}/user`).pipe(take(1));
   }
 }

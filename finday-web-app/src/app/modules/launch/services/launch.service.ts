@@ -5,9 +5,10 @@ import { Observable, take } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
 import { ApiOutput } from '../../../interfaces/api-output.interface';
-import { Category } from '../interfaces/category.interface';
-import { launch, launchInput, LaunchTypeEnum } from '../interfaces/launch.interface';
+import { launch, launchInput } from '../interfaces/launch.interface';
 import { Paged } from '../../../interfaces/paged.interface';
+import { LaunchTypeEnum } from '../../../enums/launch.enum';
+import { Category } from '../../category/interfaces/category.interface';
 
 @Injectable({
   providedIn: 'root'

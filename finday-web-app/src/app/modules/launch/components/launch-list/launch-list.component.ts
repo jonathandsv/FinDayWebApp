@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { LaunchService } from '../../services/launch.service';
-import { LaunchTypeEnum, launch } from '../../interfaces/launch.interface';
-import { Observable, of, switchMap, tap } from 'rxjs';
-import { ColumnTable } from '../../../../shared/components/table/container/table/table.component';
 import { Router } from '@angular/router';
+import { Observable, of, switchMap, tap } from 'rxjs';
+
 import { Paged } from '../../../../interfaces/paged.interface';
+import { ColumnTable } from '../../../../shared/components/table/container/table/table.component';
+import { launch } from '../../interfaces/launch.interface';
+import { LaunchService } from '../../services/launch.service';
 
 @Component({
   selector: 'app-launch-list',

@@ -8,9 +8,10 @@ import { ConvertDateService } from '../../../../services/converts/convert-date.s
 import { FormUtilsService } from '../../../../services/form/form-utils.service';
 import { Wallet } from '../../../wallet/interfaces/wallet.interface';
 import { WalletService } from '../../../wallet/services/wallet.service';
-import { Category } from '../../interfaces/category.interface';
-import { launch, launchInput, LaunchTypeEnum } from '../../interfaces/launch.interface';
+import { launch, launchInput } from '../../interfaces/launch.interface';
 import { LaunchService } from '../../services/launch.service';
+import { Category } from '../../../category/interfaces/category.interface';
+import { LaunchTypeEnum } from '../../../../enums/launch.enum';
 
 @Component({
   selector: 'app-launch-form',
@@ -138,7 +139,7 @@ export class LaunchFormComponent {
 
   getWallets(): Observable<Wallet[]> {
     return this.walletService
-      .getWalletsForUser(LaunchTypeEnum.Credit)
+      .getWalletsForUser()
         .pipe(
           switchMap((resp) => of(resp.data as Wallet[])),
           tap((listWallets) => this.listWallets = listWallets),

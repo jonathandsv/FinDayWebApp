@@ -17,4 +17,9 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/launch/launch.module').then(m => m.LaunchModule),
         canActivate:[privateAreaGuard]
     },
+    {
+        path: 'category',
+        loadChildren: () => import('./modules/category/category.module').then(m => m.CategoryModule),
+        canActivate:[privateAreaGuard]
+    },
 ];
