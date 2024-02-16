@@ -28,7 +28,9 @@ export class LaunchListComponent implements OnInit {
         switchMap((resp) => of(resp.data as Paged<launch>)),
         tap((resp) => this.totalPages = resp.total),
         tap((resp) => this.updateVisiblePages()),
-        switchMap((resp) => of(resp.records))
+        switchMap((resp) => of(resp.records)),
+        tap((resp) => console.log(`valor da lista de lancamentos: `, resp))
+
       );
   }
 
@@ -38,7 +40,7 @@ export class LaunchListComponent implements OnInit {
 
   buildColumnsTable() {
     this.columns = [
-      { id: 1, field: 'value', order: '', header: 'Valor', width: 10},
+      { id: 1, field: 'valueFormated', order: '', header: 'Valor', width: 10},
       { id: 2, field: 'description', order: '', header: 'Descrição', width: 65},
       { id: 3, field: 'categoryName', order: '', header: 'Categoria', width: 20}
     ]

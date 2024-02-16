@@ -13,6 +13,7 @@ export interface launch {
     planId?: string;
     createdAt?: any;
     updatedAt?: any;
+    valueFormated?: string;
 }
 
 export enum LaunchTypeEnum {

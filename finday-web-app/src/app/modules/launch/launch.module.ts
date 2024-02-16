@@ -1,5 +1,6 @@
 import { CommonModule, JsonPipe } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { NgxCurrencyDirective } from "ngx-currency";
 
 import { LaunchRoutingModule } from './launch-routing.module';
 import { LaunchListComponent } from './components/launch-list/launch-list.component';
@@ -30,7 +31,8 @@ import { TableComponent } from '../../shared/components/table/container/table/ta
     NgbDropdownModule,
     NgbDatepickerModule,
     JsonPipe,
-    TableComponent
+    TableComponent,
+    NgxCurrencyDirective
   ],
   providers: [
 		{ provide: NgbDateAdapter, useClass: CustomAdapter },

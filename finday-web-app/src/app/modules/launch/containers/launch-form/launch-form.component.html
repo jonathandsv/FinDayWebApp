@@ -20,11 +20,15 @@
                 </div>
                 <div class="col-sm-12">
                     <label for="value" class="form-label">Valor:</label>
-                    <input type="number" class="form-control" 
-                        formControlName="value" id="value" 
-                        placeholder=""
+                    <input type="text"
+                        class="form-control" 
+                        currencyMask
+                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                        formControlName="value"
+                        id="value" placeholder=""
                         [class.is-invalid]="form.get('value')?.errors  && (form.get('value')?.dirty || form.get('value')?.touched)"
-                        [class.is-valid]="!form.get('value')?.errors  && (form.get('value')?.dirty || form.get('value')?.touched)">
+                        [class.is-valid]="!form.get('value')?.errors  && (form.get('value')?.dirty || form.get('value')?.touched)"
+                        />
                 </div>
                 <div class="col-sm-12">
                     <label for="category" class="form-label">Categoria:</label>
