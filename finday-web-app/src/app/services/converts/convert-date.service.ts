@@ -11,7 +11,6 @@ export class ConvertDateService {
   convertNgbDateStructToDate(value: NgbDateStruct | string): Date {
     if (typeof value == 'string') {
       // 14-11-2023
-      debugger
       const array = value.split('-');
       const date: NgbDateStruct = {
         day: parseInt(array[0]),
@@ -24,7 +23,6 @@ export class ConvertDateService {
     return date;
   }
   convertDateToNgbDateStruct(value: string): NgbDateStruct {
-    debugger
     const datejs = new Date(value);
     const date: NgbDateStruct = { 
       year: datejs.getFullYear(), 

@@ -202,7 +202,6 @@ export class LaunchComponent implements OnInit {
     }
   }
   fillWallet(resp: Wallet[]): void {
-    debugger
     if (this.launch.id) {
       this.form.get('wallet')?.setValue(resp.find(x => x.id == this.launch.walletId)?.id);
     }

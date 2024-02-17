@@ -1,1 +1,58 @@
-<p>category-form works!</p>
+<h3 class="mt-2">Categorias</h3>
+<button class="btn btn-outline-primary btn-sm" (click)="backToList()">Voltar</button>
+<hr />
+<div class="row card-body">
+    <div class="col-md-12 col-lg-12">
+        <!-- <app-dump [dumpFormGroup]="form"></app-dump> -->
+        <form [formGroup]="form" 
+            (ngSubmit)="onSubmit()"
+            #formTemplate="ngForm"
+            class="needs-validation">
+            <div class="row g-3">
+                <div class="col-sm-12">
+                    <label for="nome" class="form-label">Nome:</label>
+                    <input type="text" 
+                        class="form-control"
+                        formControlName="name"
+                        id="name" placeholder=""
+                        [class.is-invalid]="form.get('name')?.errors  && (form.get('name')?.dirty || form.get('name')?.touched)"
+                        [class.is-valid]="!form.get('name')?.errors  && (form.get('name')?.dirty || form.get('name')?.touched)">
+                </div>
+                <div class="col-sm-12">
+                    <label for="description" class="form-label">Descrição:</label>
+                    <input type="text" 
+                        class="form-control"
+                        formControlName="description"
+                        id="description" placeholder=""
+                        [class.is-invalid]="form.get('description')?.errors  && (form.get('description')?.dirty || form.get('description')?.touched)"
+                        [class.is-valid]="!form.get('description')?.errors  && (form.get('description')?.dirty || form.get('description')?.touched)">
+                </div>
+                <!-- <div class="col-sm-12">
+                    <label for="category" class="form-label">Categoria:</label>
+                    <select formControlName="category" 
+                        class="form-select" id="category"
+                        [class.is-invalid]="form.get('category')?.errors  && (form.get('category')?.dirty || form.get('category')?.touched)"
+                        [class.is-valid]="!form.get('category')?.errors  && (form.get('category')?.dirty || form.get('category')?.touched)">
+                        <option value="">Selecione</option>
+                        @for (category of categories$ | async; track category.id) {
+                            <option [ngValue]="category.id">{{category.name}}</option>
+                        } @empty {
+                            <option value="" disabled>Nenhuma Categoria Encontrada.</option>
+                        }
+                    </select>
+                </div> -->
+            </div>
+            <div class="modal-footer mt-2">
+                @if (!category.id) {
+                    <button type="button" class="btn btn-light"
+                        (click)="cleanForm()">
+                        Limpar
+                    </button>
+                }
+                <button type="submit" class="btn btn-primary ms-1">
+                    Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

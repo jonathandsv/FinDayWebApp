@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, NgForm, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
@@ -18,7 +18,7 @@ import { LaunchTypeEnum } from '../../../../enums/launch.enum';
   templateUrl: './launch-form.component.html',
   styleUrl: './launch-form.component.scss'
 })
-export class LaunchFormComponent {
+export class LaunchFormComponent implements OnInit {
   @ViewChild('formTemplate') public formTemplate!: NgForm;
   form!: FormGroup
   currentDate = new Date();
@@ -164,13 +164,11 @@ export class LaunchFormComponent {
   }
 
   fillCategory(resp: Category[]): void {
-    debugger
     if (this.launch.id) {
       this.form.get('category')?.setValue(resp.find(x => x.id == this.launch.categoryId)?.id);
     }
   }
   fillWallet(resp: Wallet[]): void {
-    debugger
     if (this.launch.id) {
       this.form.get('wallet')?.setValue(resp.find(x => x.id == this.launch.walletId)?.id);
     }

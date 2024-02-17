@@ -5,4 +5,12 @@ export interface Category {
     name?: string;
     description?: string;
     type?: LaunchTypeEnum;
+    launchTypeFormated?: string;
+}
+
+export interface categoryInput {
+    id?: string;
+    name: string;
+    description: string;
+    type: LaunchTypeEnum;
 }
