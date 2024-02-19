@@ -27,20 +27,18 @@
                         [class.is-invalid]="form.get('description')?.errors  && (form.get('description')?.dirty || form.get('description')?.touched)"
                         [class.is-valid]="!form.get('description')?.errors  && (form.get('description')?.dirty || form.get('description')?.touched)">
                 </div>
-                <!-- <div class="col-sm-12">
-                    <label for="category" class="form-label">Categoria:</label>
-                    <select formControlName="category" 
-                        class="form-select" id="category"
-                        [class.is-invalid]="form.get('category')?.errors  && (form.get('category')?.dirty || form.get('category')?.touched)"
-                        [class.is-valid]="!form.get('category')?.errors  && (form.get('category')?.dirty || form.get('category')?.touched)">
+                <div class="col-sm-12">
+                    <label for="type" class="form-label">Tipo:</label>
+                    <select formControlName="type" 
+                        class="form-select" id="type"
+                        [class.is-invalid]="form.get('type')?.errors  && (form.get('type')?.dirty || form.get('type')?.touched)"
+                        [class.is-valid]="!form.get('type')?.errors  && (form.get('type')?.dirty || form.get('type')?.touched)">
                         <option value="">Selecione</option>
-                        @for (category of categories$ | async; track category.id) {
-                            <option [ngValue]="category.id">{{category.name}}</option>
-                        } @empty {
-                            <option value="" disabled>Nenhuma Categoria Encontrada.</option>
+                        @for (tp of listLaunchType; track tp.id) {
+                            <option [ngValue]="tp.id">{{tp.name}}</option>
                         }
                     </select>
-                </div> -->
+                </div>
             </div>
             <div class="modal-footer mt-2">
                 @if (!category.id) {

@@ -7,6 +7,8 @@ import { ConvertDateService } from '../../../../services/converts/convert-date.s
 import { FormUtilsService } from '../../../../services/form/form-utils.service';
 import { Category, categoryInput } from '../../interfaces/category.interface';
 import { CategoryService } from '../../services/category.service';
+import { LaunchTypeEnum, listLaunchTypeEnum } from '../../../../enums/launch.enum';
+import { ToastService } from '../../../../components/toast/toast.service';
 
 @Component({
   selector: 'app-category-form',
@@ -23,12 +25,15 @@ export class CategoryFormComponent implements OnInit {
     day: this.currentDate.getDate() 
   };
   category!: Category;
+  launchTypeEnumOptions = LaunchTypeEnum;
+  listLaunchType = listLaunchTypeEnum
 
   constructor(private fb: NonNullableFormBuilder,
     private activeRoute: ActivatedRoute,
     private router: Router,
     private formUtilsService: FormUtilsService,
     private convertDateService: ConvertDateService,
+    private toastService: ToastService,
     private categoryService: CategoryService
   ) {
 
@@ -40,7 +45,7 @@ export class CategoryFormComponent implements OnInit {
     this.form = this.fb.group({
       description: [this.category.description, [Validators.required]],
       name: [this.category.name, [Validators.required]],
-      type: [this.category.type, [Validators.required]],
+      type: [this.category.type ? this.category.type : '', [Validators.required]],
     });
   }
 
@@ -67,7 +72,7 @@ export class CategoryFormComponent implements OnInit {
     const input: categoryInput = this.getInput();
     this.categoryService.add(input).subscribe({
       next: (resp) => {
-        alert('Cadastrado com sucesso');
+        this.toastService.show({ message: `Cadastrado com sucesso`, classname: 'bg-success text-light', delay: 3000 });
         this.cleanForm();
       },
       error: (error) => {
@@ -77,11 +82,12 @@ export class CategoryFormComponent implements OnInit {
   }
   
   private update(): void {
+    debugger
     const input: categoryInput = this.getInput();
     input.id = this.category.id;
     this.categoryService.update(input).subscribe({
       next: (resp) => {
-        alert('Alterado com sucesso');
+        this.toastService.show({ message: `Alterado com sucesso`, classname: 'bg-success text-light', delay: 3000 });
       },
       error: (error: any) => {
         console.error('Error update launch', error);
@@ -95,6 +101,7 @@ export class CategoryFormComponent implements OnInit {
       description: this.form.value.description,
       type: this.form.value.type
     }
+    debugger
     return input;
   }
 

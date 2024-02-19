@@ -152,7 +152,7 @@ export class LaunchFormComponent implements OnInit {
 
   getCategories(): Observable<Category[]> {
     return this.launchService
-      .getCategoriesByType(LaunchTypeEnum.Credit)
+      .getCategoriesByType(LaunchTypeEnum.CREDIT)
         .pipe(
           switchMap((resp) => of(resp.data as Category[])),
           tap((listCategories) => this.listCategories = listCategories),
