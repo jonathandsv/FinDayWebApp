@@ -45,7 +45,9 @@ export class CategoryFormComponent implements OnInit {
     this.form = this.fb.group({
       description: [this.category.description, [Validators.required]],
       name: [this.category.name, [Validators.required]],
-      type: [this.category.type ? this.category.type : '', [Validators.required]],
+      type: [{ value: this.category.type ? this.category.type : '', 
+        disabled: this.category.id ? true : false
+      }, [Validators.required]],
     });
   }
 
@@ -99,9 +101,9 @@ export class CategoryFormComponent implements OnInit {
     const input: categoryInput = {
       name: this.form.value.name,
       description: this.form.value.description,
-      type: this.form.value.type
-    }
-    debugger
+      type: this.form.get('type')?.value,
+    };
+    debugger;
     return input;
   }
 
