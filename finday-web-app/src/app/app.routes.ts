@@ -27,4 +27,9 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/wallet/wallet.module').then(m => m.WalletModule),
         canActivate:[privateAreaGuard]
     },
+    {
+        path: 'origin',
+        loadChildren: () => import('./modules/origin/origin.module').then(m => m.OriginModule),
+        canActivate:[privateAreaGuard]
+    },
 ];
