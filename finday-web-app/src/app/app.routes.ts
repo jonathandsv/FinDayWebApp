@@ -22,4 +22,9 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/category/category.module').then(m => m.CategoryModule),
         canActivate:[privateAreaGuard]
     },
+    {
+        path: 'wallet',
+        loadChildren: () => import('./modules/wallet/wallet.module').then(m => m.WalletModule),
+        canActivate:[privateAreaGuard]
+    },
 ];

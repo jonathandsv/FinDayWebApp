@@ -5,3 +5,9 @@ export interface Wallet {
     name?: string;
     type?: TypeWalletEnum;
 }
+
+export interface WalletInput {
+    id?: string;
+    name?: string;
+    type?: TypeWalletEnum;
+}
