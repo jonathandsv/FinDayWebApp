@@ -33,6 +33,7 @@ export class WalletService {
   }
 
   add(input: WalletInput): Observable<ApiOutput<boolean>> {
+    debugger
     return this.http.post<ApiOutput<boolean>>(`${this.url}`, input).pipe(take(1))
   }
   
