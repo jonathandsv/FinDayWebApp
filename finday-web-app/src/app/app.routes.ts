@@ -32,4 +32,9 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/origin/origin.module').then(m => m.OriginModule),
         canActivate:[privateAreaGuard]
     },
+    {
+        path: 'expenses',
+        loadChildren: () => import('./modules/expenses/expenses.module').then(m => m.ExpensesModule),
+        canActivate:[privateAreaGuard]
+    },
 ];
