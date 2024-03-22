@@ -9,32 +9,42 @@
     </div>
     <div class="col-md-12 col-lg-12">
         <div class="card">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <div class="d-flex justify-content-between">
-                        <span>TOTAL DESPESAS ESSENCIAIS</span>
-                        <span>R$ 2.204,74</span>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="d-flex justify-content-between">
-                        <span>TOTAL DESPESAS NÃO ESSENCIAIS</span>
-                        <span>R$ 504,74</span>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="d-flex justify-content-between">
-                        <span>TOTAL DESPESAS GASTOS INESPERADOS</span>
-                        <span>R$ 2.804,74</span>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="d-flex justify-content-between">
-                        <span>TOTAL DESPESAS</span>
-                        <span>R$ 4.804,74</span>
-                    </div>
-                </li>
-            </ul>
+            @if (totalizers$ | async; as totalizers) {
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between">
+                            <span>TOTAL DESPESAS ESSENCIAIS</span>
+                            <span>R$ {{totalizers.totalExpensesEssentials}}</span>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between">
+                            <span>TOTAL DESPESAS NÃO ESSENCIAIS</span>
+                            <span>R$ {{totalizers.totalExpensesNonEssentials}}</span>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between">
+                            <span>TOTAL DESPESAS GASTOS INESPERADOS</span>
+                            <span>R$ {{totalizers.totalExpensesUnexpected}}</span>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between">
+                            <span>TOTAL DESPESAS</span>
+                            <span>R$ {{totalizers.totalExpenses}}</span>
+                        </div>
+                    </li>
+                </ul>
+            }
+            @else {
+                <div class="placeholder-glow">
+                    <span class="ms-1 me-1 placeholder col-11 mt-1 mb-1"></span>
+                    <span class="ms-1 me-1 placeholder col-11 mt-1 mb-1"></span>
+                    <span class="ms-1 me-1 placeholder col-11 mt-1 mb-1"></span>
+                    <span class="ms-1 me-1 placeholder col-11 mt-1 mb-1"></span>
+                </div>
+            }
         </div>
         <div class="card text-center mt-2">
             <div class="card-header">

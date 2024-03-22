@@ -15,7 +15,7 @@ import { Totalizers } from '../interfaces/totalizers.interface';
     providedIn: 'root'
 })
 export class ExpensesService {
-    url = `${environment.API}/launch`;
+    url = `${environment.API}/expense`;
 
     constructor(protected http: HttpClient, protected router: Router) {}
 
@@ -35,7 +35,7 @@ export class ExpensesService {
         return this.http.get<ApiOutput<Debt[]>>(`${this.url}/debts`).pipe(take(1));
     }
 
-    getTotalizers(): Observable<ApiOutput<Totalizers[]>> {
-        return this.http.get<ApiOutput<Totalizers[]>>(`${this.url}/totalizers`).pipe(take(1));
+    getTotalizers(): Observable<ApiOutput<Totalizers>> {
+        return this.http.get<ApiOutput<Totalizers>>(`${this.url}/totalizers`).pipe(take(1));
     }
 }

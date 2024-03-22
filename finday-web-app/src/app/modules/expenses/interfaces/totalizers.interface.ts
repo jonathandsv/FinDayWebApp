@@ -3,4 +3,5 @@ export interface Totalizers {
     totalExpensesEssentials: number;
     totalExpensesNonEssentials: number;
     totalExpensesUnexpected: number;
+    totalExpenses: number;
 }

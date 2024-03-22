@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, of, switchMap } from 'rxjs';
+
+import { Totalizers } from './interfaces/totalizers.interface';
 import { ExpensesService } from './services/expenses.service';
 
 @Component({
@@ -7,10 +10,19 @@ import { ExpensesService } from './services/expenses.service';
   styleUrl: './expenses.component.scss'
 })
 export class ExpensesComponent implements OnInit {
-  constructor(private expensesService: ExpensesService) {}
+  totalizers$: Observable<Totalizers>;
+
+  constructor(private expensesService: ExpensesService) {
+    this.totalizers$ = this.getTotalizers();
+  }
   
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    
   }
 
+  getTotalizers(): Observable<Totalizers> {
+    return this.expensesService
+      .getTotalizers()
+      .pipe(switchMap((resp) => of(resp.data as Totalizers)));
+  }
 }
