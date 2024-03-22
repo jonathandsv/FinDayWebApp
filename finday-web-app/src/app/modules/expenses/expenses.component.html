@@ -4,12 +4,12 @@
     <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-2">
         <button class="btn btn-primary btn-sm me-md-2" type="button" routerLink="new">Adicionar Despesa</button>
     </div>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
-        <span>CUSTO DE VIDA: </span><span class="bg-green">R$4.800,00</span>
-    </div>
     <div class="col-md-12 col-lg-12">
-        <div class="card">
-            @if (totalizers$ | async; as totalizers) {
+        @if (totalizers$ | async; as totalizers) {
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+                <span>CUSTO DE VIDA: </span><span class="bg-green">R$ {{totalizers.totalCostOfLiving}}</span>
+            </div>
+            <div class="card">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <div class="d-flex justify-content-between">
@@ -36,16 +36,23 @@
                         </div>
                     </li>
                 </ul>
-            }
-            @else {
-                <div class="placeholder-glow">
-                    <span class="ms-1 me-1 placeholder col-11 mt-1 mb-1"></span>
-                    <span class="ms-1 me-1 placeholder col-11 mt-1 mb-1"></span>
-                    <span class="ms-1 me-1 placeholder col-11 mt-1 mb-1"></span>
-                    <span class="ms-1 me-1 placeholder col-11 mt-1 mb-1"></span>
+            </div>
+        }
+        @else {
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2 placeholder-glow">
+                <span>CUSTO DE VIDA: </span><span class="placeholder col-2"></span>
+            </div>
+            <div class="card">
+                <div class="placeholder-glow m-2">
+                    <span class="placeholder col-12 mt-1 mb-1"></span>
+                    <span class=" placeholder col-12 mt-1 mb-1"></span>
+                    <span class=" placeholder col-12 mt-1 mb-1"></span>
+                    <span class=" placeholder col-12 mt-1 mb-1"></span>
                 </div>
-            }
-        </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-12 col-lg-12">
         <div class="card text-center mt-2">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
