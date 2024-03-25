@@ -4,126 +4,160 @@
     <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-2">
         <button class="btn btn-primary btn-sm me-md-2" type="button" routerLink="new">Adicionar Despesa</button>
     </div>
-    
+
     <div class="col-md-12 col-lg-12">
         @if (totalizers$ | async; as totalizers) {
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
-                <span>CUSTO DE VIDA: </span><span class="bg-green">R$ {{totalizers.totalCostOfLiving}}</span>
-            </div>
-            <div class="card">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <div class="d-flex justify-content-between">
-                            <span>TOTAL DESPESAS ESSENCIAIS</span>
-                            <span>R$ {{totalizers.totalExpensesEssentials}}</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="d-flex justify-content-between">
-                            <span>TOTAL DESPESAS NÃO ESSENCIAIS</span>
-                            <span>R$ {{totalizers.totalExpensesNonEssentials}}</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="d-flex justify-content-between">
-                            <span>TOTAL DESPESAS GASTOS INESPERADOS</span>
-                            <span>R$ {{totalizers.totalExpensesUnexpected}}</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="d-flex justify-content-between">
-                            <span>TOTAL DESPESAS</span>
-                            <span>R$ {{totalizers.totalExpenses}}</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+            <span>CUSTO DE VIDA: </span><span class="bg-green">R$ {{totalizers.totalCostOfLiving}}</span>
+        </div>
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <span>TOTAL DESPESAS ESSENCIAIS</span>
+                        <span>R$ {{totalizers.totalExpensesEssentials}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <span>TOTAL DESPESAS NÃO ESSENCIAIS</span>
+                        <span>R$ {{totalizers.totalExpensesNonEssentials}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <span>TOTAL DESPESAS GASTOS INESPERADOS</span>
+                        <span>R$ {{totalizers.totalExpensesUnexpected}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <span>TOTAL DESPESAS</span>
+                        <span>R$ {{totalizers.totalExpenses}}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
         }
         @else {
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2 placeholder-glow">
-                <span>CUSTO DE VIDA: </span><span class="placeholder col-2"></span>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2 placeholder-glow">
+            <span>CUSTO DE VIDA: </span><span class="placeholder col-2"></span>
+        </div>
+        <div class="card">
+            <div class="placeholder-glow m-2">
+                <span class="placeholder col-12 mt-1 mb-1"></span>
+                <span class=" placeholder col-12 mt-1 mb-1"></span>
+                <span class=" placeholder col-12 mt-1 mb-1"></span>
+                <span class=" placeholder col-12 mt-1 mb-1"></span>
             </div>
-            <div class="card">
-                <div class="placeholder-glow m-2">
-                    <span class="placeholder col-12 mt-1 mb-1"></span>
-                    <span class=" placeholder col-12 mt-1 mb-1"></span>
-                    <span class=" placeholder col-12 mt-1 mb-1"></span>
-                    <span class=" placeholder col-12 mt-1 mb-1"></span>
-                </div>
-            </div>
+        </div>
         }
     </div>
     <div class="col-md-12 col-lg-12">
-        <div class="card text-center mt-2">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="true" href="#">GASTOS PREVISTOS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">GASTOS INESPERADOS</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        <h5 class="card-title">Essenciais</h5>
-                        <table class="table table-striped table-bordered table-sm table-header-border-color">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th scope="col">Descrição</th>
-                                    <th scope="col">Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for (expense of expesesEssential$ | async; track expense.id) {
-                                    <tr>
-                                        <td>{{expense.name}}</td>
-                                        <td>R$ {{expense.value}}</td>
-                                    </tr>
-                                }
-                                @empty {
-                                    <tr>
-                                        <td colspan="2">
-                                            <div class="spinner-border" role="status">
-                                                <span class="visually-hidden">Loading...</span>
-                                            </div>
-                                        </td>
-                                    </tr> 
-                                }
-                            </tbody>
-                        </table>
+        <div class="container responsive-tabs mt-2 card">
+            <ul class="nav nav-tabs card-header-tabs mb-2" role="tablist">
+                <li class="nav-item">
+                    <a id="tab-A" href="#collapse-A" class="nav-link active" data-bs-toggle="tab" role="tab">GASTOS
+                        PREVISTOS</a>
+                </li>
+                <li class="nav-item">
+                    <a id="tab-B" href="#collapse-B" class="nav-link" data-bs-toggle="tab" role="tab">GASTOS INESPERADOS</a>
+                </li>
+            </ul>
+
+            <div id="content" class="tab-content" role="tablist">
+                <div class="accordion" id="accordionExample">
+                    <div id="pane-A" class="accordion-item" role="tabpanel" aria-labelledby="tab-A">
+                        <h2 class="accordion-header mb-0">
+                            <button class="accordion-button" type="button" 
+                                data-bs-toggle="collapse" data-bs-target="#collapse-A" aria-expanded="true" 
+                                aria-controls="collapse-A" href="#collapse-A">
+                                GASTOS PREVISTOS
+                            </button>
+                        </h2>
+                        
+                        <div id="collapse-A" class="collapse show" data-bs-parent="#content" role="tabpanel"
+                            aria-labelledby="heading-A">
+                            <div class="card-body">
+                                <div class="row ">
+                                    
+                                    <div class="col-6">
+                                        <h5 class="card-title">Essenciais</h5>
+                                        <table
+                                            class="table table-striped table-bordered table-sm table-header-border-color">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th scope="col">Descrição</th>
+                                                    <th scope="col">Valor</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (expense of expesesEssential$ | async; track expense.id) {
+                                                <tr>
+                                                    <td>{{expense.name}}</td>
+                                                    <td>R$ {{expense.value}}</td>
+                                                </tr>
+                                                }
+                                                @empty {
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <div class="spinner-border" role="status">
+                                                            <span class="visually-hidden">Loading...</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-6">
+                                        <h5 class="card-title">Não Essenciais</h5>
+                                        <table
+                                            class="table table-striped table-bordered table-sm table-header-border-color">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th scope="col">Descrição</th>
+                                                    <th scope="col">Valor</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (expense of expesesNonEssential$ | async; track expense.id) {
+                                                <tr>
+                                                    <td>{{expense.name}}</td>
+                                                    <td>R$ {{expense.value}}</td>
+                                                </tr>
+                                                }
+                                                @empty {
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <div class="spinner-border" role="status">
+                                                            <span class="visually-hidden">Loading...</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <h5 class="card-title">Não Essenciais</h5>
-                        <table class="table table-striped table-bordered table-sm table-header-border-color">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th scope="col">Descrição</th>
-                                    <th scope="col">Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for (expense of expesesNonEssential$ | async; track expense.id) {
-                                    <tr>
-                                        <td>{{expense.name}}</td>
-                                        <td>R$ {{expense.value}}</td>
-                                    </tr>
-                                }
-                                @empty {
-                                    <tr>
-                                        <td colspan="2">
-                                            <div class="spinner-border" role="status">
-                                                <span class="visually-hidden">Loading...</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                    <div id="pane-B" class="accordion-item" role="tabpanel" aria-labelledby="tab-B">
+                        <h2 class="accordion-header mb-0">
+                            <button class="accordion-button" type="button" 
+                                data-bs-toggle="collapse" data-bs-target="#collapse-B" aria-expanded="true" 
+                                aria-controls="collapse-B" href="#collapse-B">
+                                GASTOS INESPERADOS
+                              </button>
+                        </h2>
+                        <div id="collapse-B" class="collapse" data-bs-parent="#content" role="tabpanel"
+                            aria-labelledby="heading-B">
+                            <div class="card-body">[Tab content B]</div>
+                        </div>
                     </div>
                 </div>
+                
             </div>
         </div>
         <div class="card text-center mt-2">
@@ -131,9 +165,7 @@
                 <div class="row">
                     <h5 class="card-title">Dívidas</h5>
                     <div class="table-responsive">
-                        <app-table 
-                            [columns]="columnsDebt"
-                            [records]="expesesDebts$ | async">
+                        <app-table [columns]="columnsDebt" [records]="expesesDebts$ | async">
                         </app-table>
                     </div>
                 </div>
